@@ -1,0 +1,212 @@
+services:
+  # Optional local-development PostgreSQL. Production uses a standalone,
+  # backed-up Galaxy Brain database resource and does not enable this profile.
+  postgres:
+    profiles: ["local-db"]
+    image: pgvector/pgvector:pg16
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-galaxy_brain}
+      POSTGRES_USER: ${POSTGRES_USER:-galaxy_brain}
+      POSTGRES_PASSWORD: ${GALAXY_DEPLOY_POSTGRES_PASSWORD:-${POSTGRES_PASSWORD:-}}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./docker/postgres-init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-galaxy_brain} -d ${POSTGRES_DB:-galaxy_brain}"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  # Fail-closed, one-shot schema migration. Runtime roles only start after the
+  # ordered migration ledger has been applied successfully.
+  migrate:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: migrator
+    environment:
+      DATABASE_MIGRATION_URL: ${GALAXY_DEPLOY_DATABASE_MIGRATION_URL:-${DATABASE_MIGRATION_URL:-}}
+    restart: "no"
+
+  # Structure-preserving PDF conversion. This service is deliberately private
+  # and independently optional at runtime: the API records a failed primary
+  # receipt and uses its declared MarkItDown fallback when Docling is down.
+  docling:
+    image: quay.io/docling-project/docling-serve-cpu:v1.35.0@sha256:79e5fcd19ab227ed36323fa5fa31820d14d53efc4f073417ba37be7931c7af0a
+    environment:
+      DOCLING_SERVE_API_KEY: ${GALAXY_DEPLOY_DOCLING_API_KEY:-${DOCLING_API_KEY:-}}
+      DOCLING_SERVE_ENABLE_UI: "false"
+      DOCLING_SERVE_ENABLE_API_DOCS: "false"
+      DOCLING_SERVE_ENABLE_REMOTE_SERVICES: "false"
+      DOCLING_SERVE_ALLOW_EXTERNAL_PLUGINS: "false"
+      DOCLING_SERVE_DEBUG_ERROR_DETAILS: "false"
+      DOCLING_SERVE_ENG_KIND: local
+      DOCLING_SERVE_ENG_LOC_NUM_WORKERS: 2
+      DOCLING_SERVE_MAX_SOURCES_PER_REQUEST: 1
+      DOCLING_SERVE_MAX_FILE_SIZE: 26214400
+      DOCLING_SERVE_MAX_NUM_PAGES: 500
+      DOCLING_SERVE_MAX_DOCUMENT_TIMEOUT: 105
+      DOCLING_SERVE_MAX_SYNC_WAIT: 105
+      UVICORN_WORKERS: 1
+    healthcheck:
+      test: ["CMD-SHELL", "python -c \"import urllib.request; urllib.request.urlopen('http://localhost:5001/ready', timeout=5)\" || exit 1"]
+      interval: 15s
+      timeout: 6s
+      retries: 20
+      start_period: 120s
+    read_only: true
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,size=1073741824
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    user: "1001:1001"
+    pids_limit: 256
+    mem_limit: 8g
+    cpus: 4.0
+    networks:
+      - docling-internal
+    restart: unless-stopped
+
+  # Converts rich document formats to Markdown before ingestion.
+  markitdown:
+    build:
+      context: ./services/markitdown-server
+    environment:
+      MARKITDOWN_PROXY_TOKEN: ${GALAXY_DEPLOY_MARKITDOWN_PROXY_TOKEN:-${MARKITDOWN_PROXY_TOKEN:-}}
+      MARKITDOWN_TIMEOUT_SECONDS: ${MARKITDOWN_TIMEOUT_SECONDS:-105}
+      MARKITDOWN_MAX_OUTPUT_MB: ${MARKITDOWN_MAX_OUTPUT_MB:-16}
+      MARKITDOWN_MAX_CONCURRENT_WORKERS: ${MARKITDOWN_MAX_CONCURRENT_WORKERS:-2}
+    read_only: true
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,size=536870912
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    pids_limit: 64
+    mem_limit: 2g
+    cpus: 2.0
+    networks:
+      - markitdown-internal
+    restart: unless-stopped
+
+  # Structured ELN API.
+  galaxy-brain-api:
+    build:
+      context: ./services/galaxy-brain-api
+    environment:
+      GB_DATABASE_URL: ${GALAXY_DEPLOY_GB_DATABASE_URL:-${GB_DATABASE_URL:-}}
+      # Optional separate login for the gb_proof_verifier authority. Empty keeps
+      # trusted proof verification fail-closed with HTTP 503.
+      GB_PROOF_VERIFIER_DATABASE_URL: ${GALAXY_DEPLOY_GB_PROOF_VERIFIER_DATABASE_URL:-}
+      GALAXY_API_PROXY_TOKEN: ${GALAXY_DEPLOY_GALAXY_API_PROXY_TOKEN:-${GALAXY_API_PROXY_TOKEN:-}}
+      GB_DATASOURCE_ALLOWED_ROOTS_BY_TENANT: ${GB_DATASOURCE_ALLOWED_ROOTS_BY_TENANT:-{}}
+      GB_OBJECT_REFERENCE_RESOLVER_URL: ${GB_OBJECT_REFERENCE_RESOLVER_URL:-}
+      GB_OBJECT_REFERENCE_RESOLVER_TOKEN: ${GALAXY_DEPLOY_OBJECT_REFERENCE_RESOLVER_TOKEN:-${GB_OBJECT_REFERENCE_RESOLVER_TOKEN:-}}
+      # Private structure-preserving converter. No browser route or
+      # caller-controlled destination is exposed. Availability is optional.
+      DOCLING_API_INTERNAL: http://docling:5001
+      DOCLING_API_KEY: ${GALAXY_DEPLOY_DOCLING_API_KEY:-${DOCLING_API_KEY:-}}
+      DOCLING_ENGINE_VERSION: ${DOCLING_ENGINE_VERSION:-2.130.0}
+      MARKITDOWN_API_INTERNAL: http://markitdown:8043
+      MARKITDOWN_PROXY_TOKEN: ${GALAXY_DEPLOY_MARKITDOWN_PROXY_TOKEN:-${MARKITDOWN_PROXY_TOKEN:-}}
+    healthcheck:
+      test: ["CMD-SHELL", "python -c \"import urllib.request; urllib.request.urlopen('http://localhost:8044/health')\" || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+    restart: unless-stopped
+    networks:
+      - default
+      - docling-internal
+      - markitdown-internal
+
+  # Next.js frontend.
+  #
+  # HAM is an optional external plugin/service. The browser reaches it only
+  # through the authenticated Next.js proxy.
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      DATABASE_URL: ${GALAXY_DEPLOY_DATABASE_URL:-${DATABASE_URL:-}}
+      AUTH_SESSION_DAYS: ${AUTH_SESSION_DAYS:-30}
+      AUTH_ORIGIN: ${AUTH_ORIGIN:?Set AUTH_ORIGIN to the public web origin}
+      CONNECT_CALLBACK_URL: ${CONNECT_CALLBACK_URL:-${GENEROUS_CONNECT_CALLBACK_URL:-}}
+      WEBAUTHN_RP_ID: ${WEBAUTHN_RP_ID:?Set WEBAUTHN_RP_ID to the public hostname}
+      WEBAUTHN_RP_NAME: ${WEBAUTHN_RP_NAME:-Galaxy Brain}
+      AUTH_RECOVERY_CONTACT: ${AUTH_RECOVERY_CONTACT:-}
+      SMTP_URL: ${GALAXY_DEPLOY_SMTP_URL:-${SMTP_URL:-}}
+      AUTH_EMAIL_FROM: ${AUTH_EMAIL_FROM:-}
+      REGISTRATION_INVITE_CODE: ${GALAXY_DEPLOY_REGISTRATION_INVITE_CODE:-${REGISTRATION_INVITE_CODE:-}}
+      HAM_API_INTERNAL: ${HAM_API_INTERNAL:-http://host.docker.internal:8042}
+      HAM_API_BEARER_TOKEN: ${GALAXY_DEPLOY_HAM_API_BEARER_TOKEN:-${HAM_API_BEARER_TOKEN:-}}
+      HAM_SEARCH_GALAXY_TENANT_ID: ${HAM_SEARCH_GALAXY_TENANT_ID:-}
+      # Shared only with the Galaxy API. Authenticates its bounded provider
+      # resolution batches; it is never sent to browsers or to HAM.
+      GB_OBJECT_REFERENCE_RESOLVER_TOKEN: ${GALAXY_DEPLOY_OBJECT_REFERENCE_RESOLVER_TOKEN:-${GB_OBJECT_REFERENCE_RESOLVER_TOKEN:-}}
+      HAM_TASK_API_INTERNAL: ${HAM_TASK_API_INTERNAL:-}
+      # Observer reads and explicitly enabled publisher mutations use separate
+      # project credentials; neither may be an executor or administrator.
+      HAM_TASK_READ_BEARER_TOKEN: ${GALAXY_DEPLOY_HAM_TASK_READ_BEARER_TOKEN:-${HAM_TASK_READ_BEARER_TOKEN:-}}
+      HAM_TASK_MUTATIONS: ${HAM_TASK_MUTATIONS:-disabled}
+      HAM_TASK_WRITE_BEARER_TOKEN: ${GALAXY_DEPLOY_HAM_TASK_WRITE_BEARER_TOKEN:-${HAM_TASK_WRITE_BEARER_TOKEN:-}}
+      HAM_TASK_PROJECT_REF: ${HAM_TASK_PROJECT_REF:-galaxy-brain}
+      HAM_TASK_GALAXY_TENANT_ID: ${HAM_TASK_GALAXY_TENANT_ID:-}
+      HYADES_PROGRAM_CONTROL_API_INTERNAL: ${HYADES_PROGRAM_CONTROL_API_INTERNAL:-}
+      HYADES_PROGRAM_OPERATOR_BEARER_TOKEN: ${GALAXY_DEPLOY_HYADES_PROGRAM_OPERATOR_BEARER_TOKEN:-${HYADES_PROGRAM_OPERATOR_BEARER_TOKEN:-}}
+      HYADES_PROGRAM_TENANT: ${HYADES_PROGRAM_TENANT:-}
+      HYADES_PROGRAM_HAM_PROJECT: ${HYADES_PROGRAM_HAM_PROJECT:-}
+      PROOF_CAMPAIGN_GALAXY_TENANT_ID: ${PROOF_CAMPAIGN_GALAXY_TENANT_ID:-}
+      PROOF_CAMPAIGN_MUTATIONS: ${PROOF_CAMPAIGN_MUTATIONS:-disabled}
+      PROOF_CAMPAIGN_MAX_SESSION_AGE_MINUTES: ${PROOF_CAMPAIGN_MAX_SESSION_AGE_MINUTES:-15}
+      HYADES_TASK_PLAN_API_INTERNAL: ${HYADES_TASK_PLAN_API_INTERNAL:-}
+      HYADES_TASK_PLAN_OPERATOR_BEARER_TOKEN: ${GALAXY_DEPLOY_HYADES_TASK_PLAN_OPERATOR_BEARER_TOKEN:-${HYADES_TASK_PLAN_OPERATOR_BEARER_TOKEN:-}}
+      HYADES_TASK_PLAN_TENANT: ${HYADES_TASK_PLAN_TENANT:-}
+      HYADES_TASK_PLAN_HAM_PROJECT: ${HYADES_TASK_PLAN_HAM_PROJECT:-galaxy-brain}
+      TASK_PLAN_EXECUTOR_GALAXY_TENANT_ID: ${TASK_PLAN_EXECUTOR_GALAXY_TENANT_ID:-}
+      TASK_PLAN_RUN_MUTATIONS: ${TASK_PLAN_RUN_MUTATIONS:-disabled}
+      TASK_PLAN_EXECUTOR_MAX_SESSION_AGE_MINUTES: ${TASK_PLAN_EXECUTOR_MAX_SESSION_AGE_MINUTES:-15}
+      HYADES_PROOF_TASK_BINDINGS_API_INTERNAL: ${HYADES_PROOF_TASK_BINDINGS_API_INTERNAL:-}
+      HYADES_PROOF_TASK_BINDINGS_BEARER_TOKEN: ${GALAXY_DEPLOY_HYADES_PROOF_TASK_BINDINGS_BEARER_TOKEN:-${HYADES_PROOF_TASK_BINDINGS_BEARER_TOKEN:-}}
+      # Optional owner-only credential control plane; keep separate from the
+      # project task credentials and prefer a private HAM service address.
+      HAM_ADMIN_API_INTERNAL: ${HAM_ADMIN_API_INTERNAL:-}
+      HAM_ADMIN_API_BEARER_TOKEN: ${GALAXY_DEPLOY_HAM_ADMIN_API_BEARER_TOKEN:-${HAM_ADMIN_API_BEARER_TOKEN:-}}
+      HAM_ADMIN_TENANT_ID: ${HAM_ADMIN_TENANT_ID:-}
+      HAM_ADMIN_GALAXY_TENANT_ID: ${HAM_ADMIN_GALAXY_TENANT_ID:-}
+      HAM_ADMIN_GALAXY_PRINCIPAL_ID: ${HAM_ADMIN_GALAXY_PRINCIPAL_ID:-}
+      HAM_ADMIN_OWNER_NOSTR_PUBKEY: ${HAM_ADMIN_OWNER_NOSTR_PUBKEY:-}
+      HAM_ADMIN_MAX_SESSION_AGE_MINUTES: ${HAM_ADMIN_MAX_SESSION_AGE_MINUTES:-15}
+      MARKITDOWN_API_INTERNAL: http://markitdown:8043
+      MARKITDOWN_PROXY_TOKEN: ${GALAXY_DEPLOY_MARKITDOWN_PROXY_TOKEN:-${MARKITDOWN_PROXY_TOKEN:-}}
+      GALAXY_API_INTERNAL: http://galaxy-brain-api:8044
+      GALAXY_API_PROXY_TOKEN: ${GALAXY_DEPLOY_GALAXY_API_PROXY_TOKEN:-${GALAXY_API_PROXY_TOKEN:-}}
+    ports:
+      - "${WEB_HOST_PORT:-3001}:3000"
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+      markitdown:
+        condition: service_started
+      galaxy-brain-api:
+        condition: service_healthy
+    restart: unless-stopped
+    networks:
+      - default
+      - markitdown-internal
+
+volumes:
+  pgdata:
+
+networks:
+  docling-internal:
+    internal: true
+  markitdown-internal:
+    internal: true

@@ -1,0 +1,107 @@
+{
+  "document": {
+    "filename": "structured-paper.pdf",
+    "json_content": {
+      "schema_name": "DoclingDocument",
+      "version": "1.8.0",
+      "name": "structured-paper",
+      "origin": {
+        "mimetype": "application/pdf",
+        "binary_hash": 123456789,
+        "filename": "structured-paper.pdf"
+      },
+      "body": {
+        "self_ref": "#/body",
+        "name": "_root_",
+        "label": "unspecified",
+        "children": [
+          {"$ref": "#/texts/0"},
+          {"$ref": "#/tables/0"},
+          {"$ref": "#/pictures/0"},
+          {"$ref": "#/texts/2"}
+        ]
+      },
+      "furniture": {
+        "self_ref": "#/furniture",
+        "name": "_root_",
+        "label": "unspecified",
+        "children": []
+      },
+      "groups": [],
+      "texts": [
+        {
+          "self_ref": "#/texts/0",
+          "parent": {"$ref": "#/body"},
+          "children": [],
+          "label": "section_header",
+          "prov": [{"page_no": 1, "bbox": {"l": 36, "t": 54, "r": 260, "b": 78, "coord_origin": "TOPLEFT"}, "charspan": [0, 12]}],
+          "orig": "Introduction",
+          "text": "Introduction",
+          "level": 1
+        },
+        {
+          "self_ref": "#/texts/1",
+          "parent": {"$ref": "#/pictures/0"},
+          "children": [],
+          "label": "caption",
+          "prov": [{"page_no": 1, "bbox": {"l": 72, "t": 430, "r": 530, "b": 455, "coord_origin": "TOPLEFT"}, "charspan": [0, 34]}],
+          "orig": "Figure 1: Experimental geometry.",
+          "text": "Figure 1: Experimental geometry."
+        },
+        {
+          "self_ref": "#/texts/2",
+          "parent": {"$ref": "#/body"},
+          "children": [],
+          "label": "formula",
+          "prov": [{"page_no": 1, "bbox": {"l": 180, "t": 490, "r": 420, "b": 525, "coord_origin": "TOPLEFT"}, "charspan": [0, 0]}],
+          "orig": "E=mc^2",
+          "text": ""
+        }
+      ],
+      "tables": [
+        {
+          "self_ref": "#/tables/0",
+          "parent": {"$ref": "#/body"},
+          "children": [],
+          "label": "table",
+          "prov": [{"page_no": 1, "bbox": {"l": 60, "t": 110, "r": 550, "b": 240, "coord_origin": "TOPLEFT"}, "charspan": [0, 0]}],
+          "data": {
+            "num_rows": 2,
+            "num_cols": 2,
+            "table_cells": [
+              {"text": "Quantity", "row_span": 1, "col_span": 1, "start_row_offset_idx": 0, "end_row_offset_idx": 1, "start_col_offset_idx": 0, "end_col_offset_idx": 1, "column_header": true, "row_header": false, "row_section": false},
+              {"text": "Value", "row_span": 1, "col_span": 1, "start_row_offset_idx": 0, "end_row_offset_idx": 1, "start_col_offset_idx": 1, "end_col_offset_idx": 2, "column_header": true, "row_header": false, "row_section": false},
+              {"text": "Energy", "row_span": 1, "col_span": 1, "start_row_offset_idx": 1, "end_row_offset_idx": 2, "start_col_offset_idx": 0, "end_col_offset_idx": 1, "column_header": false, "row_header": false, "row_section": false},
+              {"text": "mc^2", "row_span": 1, "col_span": 1, "start_row_offset_idx": 1, "end_row_offset_idx": 2, "start_col_offset_idx": 1, "end_col_offset_idx": 2, "column_header": false, "row_header": false, "row_section": false}
+            ]
+          },
+          "captions": [],
+          "footnotes": [],
+          "references": []
+        }
+      ],
+      "pictures": [
+        {
+          "self_ref": "#/pictures/0",
+          "parent": {"$ref": "#/body"},
+          "children": [],
+          "label": "picture",
+          "prov": [{"page_no": 1, "bbox": {"l": 72, "t": 260, "r": 530, "b": 420, "coord_origin": "TOPLEFT"}, "charspan": [0, 0]}],
+          "captions": [{"$ref": "#/texts/1"}],
+          "footnotes": [],
+          "references": [],
+          "annotations": []
+        }
+      ],
+      "key_value_items": [],
+      "pages": {
+        "1": {"page_no": 1, "size": {"width": 612, "height": 792}}
+      }
+    },
+    "md_content": "# Introduction\n\n| Quantity | Value |\n| --- | --- |\n| Energy | mc^2 |\n\n![Figure 1: Experimental geometry.](image)\n\n$$E=mc^2$$"
+  },
+  "status": "success",
+  "processing_time": 1.25,
+  "timings": {},
+  "errors": []
+}

@@ -1,0 +1,2 @@
+-- Application tables are created only by the ordered migration job in
+-- db/migrations. This init directory is limited to local database bootstrap.

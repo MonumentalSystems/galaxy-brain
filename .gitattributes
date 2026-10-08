@@ -1,0 +1,3 @@
+# Exact provider bytes: signatures and digests cover these files byte for byte.
+services/galaxy-brain-api/contracts/fixtures/proofs-blah-dev.*.json -text
+services/galaxy-brain-api/contracts/fixtures/Solution.*.lean -text

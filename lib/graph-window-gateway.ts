@@ -1,0 +1,1 @@
+export const MAX_GRAPH_WINDOW_REQUEST_BYTES = 32_768

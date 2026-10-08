@@ -1,0 +1,90 @@
+{
+  "schema_id": "galaxy.proof-dag.v1",
+  "graph_id": "bkt-vortex-unbinding",
+  "graph_kind": "campaign",
+  "targets": [
+    {
+      "target_id": "setup",
+      "title": "Two-dimensional superconducting film",
+      "natural_language_summary": "Fix the film, the temperature range, and the observable.",
+      "category": "setup",
+      "target_kind": "definition",
+      "formal_binding": {
+        "status": "mapped"
+      }
+    },
+    {
+      "target_id": "bound-pairs",
+      "title": "Bound vortex-antivortex pairs below T_BKT",
+      "natural_language_summary": "Far-field circulation cancels, preserving quasi-long-range order.",
+      "category": "mechanism",
+      "target_kind": "lemma",
+      "formal_binding": {
+        "status": "mapped"
+      }
+    },
+    {
+      "target_id": "unbinding",
+      "title": "Pairs unbind above T_BKT",
+      "natural_language_summary": "Effective interaction weakens and pairs separate over growing length scales.",
+      "category": "mechanism",
+      "target_kind": "lemma",
+      "formal_binding": {
+        "status": "mapped"
+      }
+    },
+    {
+      "target_id": "noise-probe",
+      "title": "Local noise magnetometry resolves free vortices",
+      "natural_language_summary": "Magnetic noise provides a spatially resolved probe of the resulting dynamics.",
+      "category": "method",
+      "target_kind": "method",
+      "formal_binding": {
+        "status": "mapped"
+      }
+    },
+    {
+      "target_id": "transition",
+      "title": "BKT transition is observed",
+      "natural_language_summary": "The measured noise signature matches the unbinding prediction.",
+      "category": "claim",
+      "target_kind": "theorem",
+      "formal_binding": {
+        "status": "mapped"
+      }
+    }
+  ],
+  "relations": [
+    {
+      "relation_id": "r1",
+      "prerequisite_target_id": "setup",
+      "dependent_target_id": "bound-pairs",
+      "relation_type": "DEPENDS_ON"
+    },
+    {
+      "relation_id": "r2",
+      "prerequisite_target_id": "bound-pairs",
+      "dependent_target_id": "unbinding",
+      "relation_type": "REDUCES_TO"
+    },
+    {
+      "relation_id": "r3",
+      "prerequisite_target_id": "setup",
+      "dependent_target_id": "noise-probe",
+      "relation_type": "USES"
+    },
+    {
+      "relation_id": "r4",
+      "prerequisite_target_id": "unbinding",
+      "dependent_target_id": "transition",
+      "relation_type": "DEPENDS_ON"
+    },
+    {
+      "relation_id": "r5",
+      "prerequisite_target_id": "noise-probe",
+      "dependent_target_id": "transition",
+      "relation_type": "USES"
+    }
+  ],
+  "title": "BKT vortex unbinding campaign"
+}

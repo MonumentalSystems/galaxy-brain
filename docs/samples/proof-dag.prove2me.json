@@ -1,0 +1,706 @@
+{
+  "schema_id": "galaxy.proof-dag.v1",
+  "graph_id": "8a94e80d-166c-5334-8234-72a4c3637fd8",
+  "graph_kind": "repository-field",
+  "title": "Synthetic root theorem (sample decomposition)",
+  "targets": [
+    {
+      "target_id": "3f676e55-980b-5861-85b6-baa206dd18d6",
+      "target_kind": "formal-target",
+      "title": "Synthetic lemma 1",
+      "natural_language_summary": "Placeholder statement for synthetic lemma 1. This sample keeps the shape of a real four-layer decomposition without reproducing third-party theorem text.",
+      "category": "prove2me-theorem",
+      "external": {
+        "prove2me": {
+          "theorem_id": "3f676e55-980b-5861-85b6-baa206dd18d6"
+        }
+      }
+    },
+    {
+      "target_id": "6cc47a7f-0383-59d8-8b6c-481d83cff8db",
+      "target_kind": "formal-target",
+      "title": "Synthetic lemma 2",
+      "natural_language_summary": "Placeholder statement for synthetic lemma 2. This sample keeps the shape of a real four-layer decomposition without reproducing third-party theorem text.",
+      "category": "prove2me-theorem",
+      "external": {
+        "prove2me": {
+          "theorem_id": "6cc47a7f-0383-59d8-8b6c-481d83cff8db"
+        }
+      }
+    },
+    {
+      "target_id": "64c0f278-4053-5cfb-8b54-47c1e01a6d5c",
+      "target_kind": "formal-target",
+      "title": "Synthetic lemma 3",
+      "natural_language_summary": "Placeholder statement for synthetic lemma 3. This sample keeps the shape of a real four-layer decomposition without reproducing third-party theorem text.",
+      "category": "prove2me-theorem",
+      "external": {
+        "prove2me": {
+          "theorem_id": "64c0f278-4053-5cfb-8b54-47c1e01a6d5c"
+        }
+      }
+    },
+    {
+      "target_id": "e799820c-9e5f-5e65-8290-adbe463c1f5e",
+      "target_kind": "formal-target",
+      "title": "Synthetic lemma 4",
+      "natural_language_summary": "Placeholder statement for synthetic lemma 4. This sample keeps the shape of a real four-layer decomposition without reproducing third-party theorem text.",
+      "category": "prove2me-theorem",
+      "external": {
+        "prove2me": {
+          "theorem_id": "e799820c-9e5f-5e65-8290-adbe463c1f5e"
+        }
+      }
+    },
+    {
+      "target_id": "7fc31036-7283-5076-92f9-02030d1dd4b2",
+      "target_kind": "formal-target",
+      "title": "Synthetic lemma 5",
+      "natural_language_summary": "Placeholder statement for synthetic lemma 5. This sample keeps the shape of a real four-layer decomposition without reproducing third-party theorem text.",
+      "category": "prove2me-theorem",
+      "external": {
+        "prove2me": {
+          "theorem_id": "7fc31036-7283-5076-92f9-02030d1dd4b2"
+        }
+      }
+    },
+    {
+      "target_id": "cfcb8775-b20e-56cf-9669-e11ba21b75b6",
+      "target_kind": "formal-target",
+      "title": "Synthetic lemma 6",
+      "natural_language_summary": "Placeholder statement for synthetic lemma 6. This sample keeps the shape of a real four-layer decomposition without reproducing third-party theorem text.",
+      "category": "prove2me-theorem",
+      "external": {
+        "prove2me": {
+          "theorem_id": "cfcb8775-b20e-56cf-9669-e11ba21b75b6"
+        }
+      }
+    },
+    {
+      "target_id": "f8ef37fa-1562-52b4-afd7-e1ee40df4311",
+      "target_kind": "formal-target",
+      "title": "Synthetic lemma 7",
+      "natural_language_summary": "Placeholder statement for synthetic lemma 7. This sample keeps the shape of a real four-layer decomposition without reproducing third-party theorem text.",
+      "category": "prove2me-theorem",
+      "external": {
+        "prove2me": {
+          "theorem_id": "f8ef37fa-1562-52b4-afd7-e1ee40df4311"
+        }
+      }
+    },
+    {
+      "target_id": "e5b5d40c-969b-561d-9cf6-a5eccd91e39e",
+      "target_kind": "formal-target",
+      "title": "Synthetic lemma 8",
+      "natural_language_summary": "Placeholder statement for synthetic lemma 8. This sample keeps the shape of a real four-layer decomposition without reproducing third-party theorem text.",
+      "category": "prove2me-theorem",
+      "external": {
+        "prove2me": {
+          "theorem_id": "e5b5d40c-969b-561d-9cf6-a5eccd91e39e"
+        }
+      }
+    },
+    {
+      "target_id": "0375eab5-1c08-5a33-99ec-8c846cdf6da9",
+      "target_kind": "formal-target",
+      "title": "Synthetic lemma 9",
+      "natural_language_summary": "Placeholder statement for synthetic lemma 9. This sample keeps the shape of a real four-layer decomposition without reproducing third-party theorem text.",
+      "category": "prove2me-theorem",
+      "external": {
+        "prove2me": {
+          "theorem_id": "0375eab5-1c08-5a33-99ec-8c846cdf6da9"
+        }
+      }
+    },
+    {
+      "target_id": "a7a840f2-1a4d-546a-929b-cc0186119715",
+      "target_kind": "formal-target",
+      "title": "Synthetic lemma 10",
+      "natural_language_summary": "Placeholder statement for synthetic lemma 10. This sample keeps the shape of a real four-layer decomposition without reproducing third-party theorem text.",
+      "category": "prove2me-theorem",
+      "external": {
+        "prove2me": {
+          "theorem_id": "a7a840f2-1a4d-546a-929b-cc0186119715"
+        }
+      }
+    },
+    {
+      "target_id": "e6a042ce-e81b-57ad-aa1a-b003a7f9e3fd",
+      "target_kind": "formal-target",
+      "title": "Synthetic lemma 11",
+      "natural_language_summary": "Placeholder statement for synthetic lemma 11. This sample keeps the shape of a real four-layer decomposition without reproducing third-party theorem text.",
+      "category": "prove2me-theorem",
+      "external": {
+        "prove2me": {
+          "theorem_id": "e6a042ce-e81b-57ad-aa1a-b003a7f9e3fd"
+        }
+      }
+    },
+    {
+      "target_id": "30cc4408-df77-5d66-b2e0-1ec66874f92f",
+      "target_kind": "formal-target",
+      "title": "Synthetic lemma 12",
+      "natural_language_summary": "Placeholder statement for synthetic lemma 12. This sample keeps the shape of a real four-layer decomposition without reproducing third-party theorem text.",
+      "category": "prove2me-theorem",
+      "external": {
+        "prove2me": {
+          "theorem_id": "30cc4408-df77-5d66-b2e0-1ec66874f92f"
+        }
+      }
+    },
+    {
+      "target_id": "8830bb22-912f-5687-96b9-52bae97a4119",
+      "target_kind": "formal-target",
+      "title": "Synthetic lemma 13",
+      "natural_language_summary": "Placeholder statement for synthetic lemma 13. This sample keeps the shape of a real four-layer decomposition without reproducing third-party theorem text.",
+      "category": "prove2me-theorem",
+      "external": {
+        "prove2me": {
+          "theorem_id": "8830bb22-912f-5687-96b9-52bae97a4119"
+        }
+      }
+    },
+    {
+      "target_id": "7cb93f03-bac7-53ca-96f0-74fef851785c",
+      "target_kind": "formal-target",
+      "title": "Synthetic lemma 14",
+      "natural_language_summary": "Placeholder statement for synthetic lemma 14. This sample keeps the shape of a real four-layer decomposition without reproducing third-party theorem text.",
+      "category": "prove2me-theorem",
+      "external": {
+        "prove2me": {
+          "theorem_id": "7cb93f03-bac7-53ca-96f0-74fef851785c"
+        }
+      }
+    },
+    {
+      "target_id": "914e4eed-67a1-5f27-a15b-08f832ee00df",
+      "target_kind": "formal-target",
+      "title": "Synthetic lemma 15",
+      "natural_language_summary": "Placeholder statement for synthetic lemma 15. This sample keeps the shape of a real four-layer decomposition without reproducing third-party theorem text.",
+      "category": "prove2me-theorem",
+      "external": {
+        "prove2me": {
+          "theorem_id": "914e4eed-67a1-5f27-a15b-08f832ee00df"
+        }
+      }
+    },
+    {
+      "target_id": "8a973035-acff-5f79-a03f-0d1fde883ebc",
+      "target_kind": "formal-target",
+      "title": "Synthetic lemma 16",
+      "natural_language_summary": "Placeholder statement for synthetic lemma 16. This sample keeps the shape of a real four-layer decomposition without reproducing third-party theorem text.",
+      "category": "prove2me-theorem",
+      "external": {
+        "prove2me": {
+          "theorem_id": "8a973035-acff-5f79-a03f-0d1fde883ebc"
+        }
+      }
+    },
+    {
+      "target_id": "82fed046-7b94-5444-b945-bd31f7ca0c32",
+      "target_kind": "formal-target",
+      "title": "Synthetic lemma 17",
+      "natural_language_summary": "Placeholder statement for synthetic lemma 17. This sample keeps the shape of a real four-layer decomposition without reproducing third-party theorem text.",
+      "category": "prove2me-theorem",
+      "external": {
+        "prove2me": {
+          "theorem_id": "82fed046-7b94-5444-b945-bd31f7ca0c32"
+        }
+      }
+    },
+    {
+      "target_id": "ea3d3fe1-810d-5e63-88b1-d3b4214b2594",
+      "target_kind": "formal-target",
+      "title": "Synthetic lemma 18",
+      "natural_language_summary": "Placeholder statement for synthetic lemma 18. This sample keeps the shape of a real four-layer decomposition without reproducing third-party theorem text.",
+      "category": "prove2me-theorem",
+      "external": {
+        "prove2me": {
+          "theorem_id": "ea3d3fe1-810d-5e63-88b1-d3b4214b2594"
+        }
+      }
+    },
+    {
+      "target_id": "32192ec2-d13f-5faa-bddf-9e90d0e00a2f",
+      "target_kind": "formal-target",
+      "title": "Synthetic lemma 19",
+      "natural_language_summary": "Placeholder statement for synthetic lemma 19. This sample keeps the shape of a real four-layer decomposition without reproducing third-party theorem text.",
+      "category": "prove2me-theorem",
+      "external": {
+        "prove2me": {
+          "theorem_id": "32192ec2-d13f-5faa-bddf-9e90d0e00a2f"
+        }
+      }
+    },
+    {
+      "target_id": "7d7d026e-84f1-5fee-a037-a969a0faf29c",
+      "target_kind": "formal-target",
+      "title": "Synthetic lemma 20",
+      "natural_language_summary": "Placeholder statement for synthetic lemma 20. This sample keeps the shape of a real four-layer decomposition without reproducing third-party theorem text.",
+      "category": "prove2me-theorem",
+      "external": {
+        "prove2me": {
+          "theorem_id": "7d7d026e-84f1-5fee-a037-a969a0faf29c"
+        }
+      }
+    },
+    {
+      "target_id": "7befeb5c-42e0-5fe8-a478-9dccce2364f4",
+      "target_kind": "formal-target",
+      "title": "Synthetic lemma 21",
+      "natural_language_summary": "Placeholder statement for synthetic lemma 21. This sample keeps the shape of a real four-layer decomposition without reproducing third-party theorem text.",
+      "category": "prove2me-theorem",
+      "external": {
+        "prove2me": {
+          "theorem_id": "7befeb5c-42e0-5fe8-a478-9dccce2364f4"
+        }
+      }
+    },
+    {
+      "target_id": "0da2c26d-9bbb-5088-a2c3-480c5d21ee89",
+      "target_kind": "formal-target",
+      "title": "Synthetic lemma 22",
+      "natural_language_summary": "Placeholder statement for synthetic lemma 22. This sample keeps the shape of a real four-layer decomposition without reproducing third-party theorem text.",
+      "category": "prove2me-theorem",
+      "external": {
+        "prove2me": {
+          "theorem_id": "0da2c26d-9bbb-5088-a2c3-480c5d21ee89"
+        }
+      }
+    },
+    {
+      "target_id": "063672f6-360e-570c-981e-8e5b475f2972",
+      "target_kind": "formal-target",
+      "title": "Synthetic lemma 23",
+      "natural_language_summary": "Placeholder statement for synthetic lemma 23. This sample keeps the shape of a real four-layer decomposition without reproducing third-party theorem text.",
+      "category": "prove2me-theorem",
+      "external": {
+        "prove2me": {
+          "theorem_id": "063672f6-360e-570c-981e-8e5b475f2972"
+        }
+      }
+    },
+    {
+      "target_id": "9ca7d055-9487-520e-ab8b-cba570319926",
+      "target_kind": "formal-target",
+      "title": "Synthetic lemma 24",
+      "natural_language_summary": "Placeholder statement for synthetic lemma 24. This sample keeps the shape of a real four-layer decomposition without reproducing third-party theorem text.",
+      "category": "prove2me-theorem",
+      "external": {
+        "prove2me": {
+          "theorem_id": "9ca7d055-9487-520e-ab8b-cba570319926"
+        }
+      }
+    },
+    {
+      "target_id": "5c0350f1-caee-596b-973a-106622bc1513",
+      "target_kind": "formal-target",
+      "title": "Synthetic lemma 25",
+      "natural_language_summary": "Placeholder statement for synthetic lemma 25. This sample keeps the shape of a real four-layer decomposition without reproducing third-party theorem text.",
+      "category": "prove2me-theorem",
+      "external": {
+        "prove2me": {
+          "theorem_id": "5c0350f1-caee-596b-973a-106622bc1513"
+        }
+      }
+    },
+    {
+      "target_id": "1bcef4b1-e7cb-523e-80e3-76f02978b8d5",
+      "target_kind": "formal-target",
+      "title": "Synthetic lemma 26",
+      "natural_language_summary": "Placeholder statement for synthetic lemma 26. This sample keeps the shape of a real four-layer decomposition without reproducing third-party theorem text.",
+      "category": "prove2me-theorem",
+      "external": {
+        "prove2me": {
+          "theorem_id": "1bcef4b1-e7cb-523e-80e3-76f02978b8d5"
+        }
+      }
+    },
+    {
+      "target_id": "1b0dad8b-f948-57a7-a7d6-8ca43a61d51b",
+      "target_kind": "formal-target",
+      "title": "Synthetic lemma 27",
+      "natural_language_summary": "Placeholder statement for synthetic lemma 27. This sample keeps the shape of a real four-layer decomposition without reproducing third-party theorem text.",
+      "category": "prove2me-theorem",
+      "external": {
+        "prove2me": {
+          "theorem_id": "1b0dad8b-f948-57a7-a7d6-8ca43a61d51b"
+        }
+      }
+    },
+    {
+      "target_id": "e918cc6d-866a-587e-98c4-744b294b59fd",
+      "target_kind": "formal-target",
+      "title": "Synthetic lemma 28",
+      "natural_language_summary": "Placeholder statement for synthetic lemma 28. This sample keeps the shape of a real four-layer decomposition without reproducing third-party theorem text.",
+      "category": "prove2me-theorem",
+      "external": {
+        "prove2me": {
+          "theorem_id": "e918cc6d-866a-587e-98c4-744b294b59fd"
+        }
+      }
+    },
+    {
+      "target_id": "634243aa-ccaa-54aa-9af5-9d10e606e9c0",
+      "target_kind": "formal-target",
+      "title": "Synthetic lemma 29",
+      "natural_language_summary": "Placeholder statement for synthetic lemma 29. This sample keeps the shape of a real four-layer decomposition without reproducing third-party theorem text.",
+      "category": "prove2me-theorem",
+      "external": {
+        "prove2me": {
+          "theorem_id": "634243aa-ccaa-54aa-9af5-9d10e606e9c0"
+        }
+      }
+    },
+    {
+      "target_id": "2a08998b-41b8-5850-8e5d-ef9edf840e36",
+      "target_kind": "formal-target",
+      "title": "Synthetic lemma 30",
+      "natural_language_summary": "Placeholder statement for synthetic lemma 30. This sample keeps the shape of a real four-layer decomposition without reproducing third-party theorem text.",
+      "category": "prove2me-theorem",
+      "external": {
+        "prove2me": {
+          "theorem_id": "2a08998b-41b8-5850-8e5d-ef9edf840e36"
+        }
+      }
+    },
+    {
+      "target_id": "f430ad0d-3fc5-53a3-a69f-207d093609c6",
+      "target_kind": "formal-target",
+      "title": "Synthetic lemma 31",
+      "natural_language_summary": "Placeholder statement for synthetic lemma 31. This sample keeps the shape of a real four-layer decomposition without reproducing third-party theorem text.",
+      "category": "prove2me-theorem",
+      "external": {
+        "prove2me": {
+          "theorem_id": "f430ad0d-3fc5-53a3-a69f-207d093609c6"
+        }
+      }
+    },
+    {
+      "target_id": "11c9b3a7-c9f5-54f6-8435-215b9dd3c032",
+      "target_kind": "formal-target",
+      "title": "Synthetic lemma 32",
+      "natural_language_summary": "Placeholder statement for synthetic lemma 32. This sample keeps the shape of a real four-layer decomposition without reproducing third-party theorem text.",
+      "category": "prove2me-theorem",
+      "external": {
+        "prove2me": {
+          "theorem_id": "11c9b3a7-c9f5-54f6-8435-215b9dd3c032"
+        }
+      }
+    },
+    {
+      "target_id": "38285a90-1a9a-53cf-a480-698b7f8032ce",
+      "target_kind": "formal-target",
+      "title": "Synthetic lemma 33",
+      "natural_language_summary": "Placeholder statement for synthetic lemma 33. This sample keeps the shape of a real four-layer decomposition without reproducing third-party theorem text.",
+      "category": "prove2me-theorem",
+      "external": {
+        "prove2me": {
+          "theorem_id": "38285a90-1a9a-53cf-a480-698b7f8032ce"
+        }
+      }
+    },
+    {
+      "target_id": "ad1fd21e-32e3-54ef-8f4e-2bdd44c7bad4",
+      "target_kind": "formal-target",
+      "title": "Synthetic lemma 34",
+      "natural_language_summary": "Placeholder statement for synthetic lemma 34. This sample keeps the shape of a real four-layer decomposition without reproducing third-party theorem text.",
+      "category": "prove2me-theorem",
+      "external": {
+        "prove2me": {
+          "theorem_id": "ad1fd21e-32e3-54ef-8f4e-2bdd44c7bad4"
+        }
+      }
+    },
+    {
+      "target_id": "afe1e838-7349-5627-930d-d1bd6a275018",
+      "target_kind": "formal-target",
+      "title": "Synthetic lemma 35",
+      "natural_language_summary": "Placeholder statement for synthetic lemma 35. This sample keeps the shape of a real four-layer decomposition without reproducing third-party theorem text.",
+      "category": "prove2me-theorem",
+      "external": {
+        "prove2me": {
+          "theorem_id": "afe1e838-7349-5627-930d-d1bd6a275018"
+        }
+      }
+    },
+    {
+      "target_id": "8a94e80d-166c-5334-8234-72a4c3637fd8",
+      "target_kind": "formal-target",
+      "title": "Synthetic root theorem",
+      "natural_language_summary": "Placeholder statement for synthetic lemma 36. This sample keeps the shape of a real four-layer decomposition without reproducing third-party theorem text.",
+      "category": "prove2me-theorem",
+      "external": {
+        "prove2me": {
+          "theorem_id": "8a94e80d-166c-5334-8234-72a4c3637fd8"
+        }
+      }
+    },
+    {
+      "target_id": "1e263212-8fa5-5c34-9a26-cfae9bd40d0f",
+      "target_kind": "formal-target",
+      "title": "Synthetic lemma 37",
+      "natural_language_summary": "Placeholder statement for synthetic lemma 37. This sample keeps the shape of a real four-layer decomposition without reproducing third-party theorem text.",
+      "category": "prove2me-theorem",
+      "external": {
+        "prove2me": {
+          "theorem_id": "1e263212-8fa5-5c34-9a26-cfae9bd40d0f"
+        }
+      }
+    },
+    {
+      "target_id": "6b6b89e0-fa15-50f3-aabb-31c357eefb2e",
+      "target_kind": "formal-target",
+      "title": "Synthetic lemma 38",
+      "natural_language_summary": "Placeholder statement for synthetic lemma 38. This sample keeps the shape of a real four-layer decomposition without reproducing third-party theorem text.",
+      "category": "prove2me-theorem",
+      "external": {
+        "prove2me": {
+          "theorem_id": "6b6b89e0-fa15-50f3-aabb-31c357eefb2e"
+        }
+      }
+    },
+    {
+      "target_id": "0cbfa0d6-f6c2-5eb6-82b8-938c16483f9d",
+      "target_kind": "formal-target",
+      "title": "Synthetic lemma 39",
+      "natural_language_summary": "Placeholder statement for synthetic lemma 39. This sample keeps the shape of a real four-layer decomposition without reproducing third-party theorem text.",
+      "category": "prove2me-theorem",
+      "external": {
+        "prove2me": {
+          "theorem_id": "0cbfa0d6-f6c2-5eb6-82b8-938c16483f9d"
+        }
+      }
+    },
+    {
+      "target_id": "e2a7e579-79b0-56a2-97f1-88a7db25c2f2",
+      "target_kind": "formal-target",
+      "title": "Synthetic lemma 40",
+      "natural_language_summary": "Placeholder statement for synthetic lemma 40. This sample keeps the shape of a real four-layer decomposition without reproducing third-party theorem text.",
+      "category": "prove2me-theorem",
+      "external": {
+        "prove2me": {
+          "theorem_id": "e2a7e579-79b0-56a2-97f1-88a7db25c2f2"
+        }
+      }
+    },
+    {
+      "target_id": "cbdf9369-079d-5031-82de-21957b2cf493",
+      "target_kind": "formal-target",
+      "title": "Synthetic lemma 41",
+      "natural_language_summary": "Placeholder statement for synthetic lemma 41. This sample keeps the shape of a real four-layer decomposition without reproducing third-party theorem text.",
+      "category": "prove2me-theorem",
+      "external": {
+        "prove2me": {
+          "theorem_id": "cbdf9369-079d-5031-82de-21957b2cf493"
+        }
+      }
+    }
+  ],
+  "relations": [
+    {
+      "relation_id": "e2a7e579-79b0-56a2-97f1-88a7db25c2f2->8a94e80d-166c-5334-8234-72a4c3637fd8",
+      "relation_type": "REDUCES_TO",
+      "prerequisite_target_id": "e2a7e579-79b0-56a2-97f1-88a7db25c2f2",
+      "dependent_target_id": "8a94e80d-166c-5334-8234-72a4c3637fd8"
+    },
+    {
+      "relation_id": "e2a7e579-79b0-56a2-97f1-88a7db25c2f2->1bcef4b1-e7cb-523e-80e3-76f02978b8d5",
+      "relation_type": "REDUCES_TO",
+      "prerequisite_target_id": "e2a7e579-79b0-56a2-97f1-88a7db25c2f2",
+      "dependent_target_id": "1bcef4b1-e7cb-523e-80e3-76f02978b8d5"
+    },
+    {
+      "relation_id": "82fed046-7b94-5444-b945-bd31f7ca0c32->2a08998b-41b8-5850-8e5d-ef9edf840e36",
+      "relation_type": "REDUCES_TO",
+      "prerequisite_target_id": "82fed046-7b94-5444-b945-bd31f7ca0c32",
+      "dependent_target_id": "2a08998b-41b8-5850-8e5d-ef9edf840e36"
+    },
+    {
+      "relation_id": "82fed046-7b94-5444-b945-bd31f7ca0c32->e2a7e579-79b0-56a2-97f1-88a7db25c2f2",
+      "relation_type": "REDUCES_TO",
+      "prerequisite_target_id": "82fed046-7b94-5444-b945-bd31f7ca0c32",
+      "dependent_target_id": "e2a7e579-79b0-56a2-97f1-88a7db25c2f2"
+    },
+    {
+      "relation_id": "82fed046-7b94-5444-b945-bd31f7ca0c32->6cc47a7f-0383-59d8-8b6c-481d83cff8db",
+      "relation_type": "REDUCES_TO",
+      "prerequisite_target_id": "82fed046-7b94-5444-b945-bd31f7ca0c32",
+      "dependent_target_id": "6cc47a7f-0383-59d8-8b6c-481d83cff8db"
+    },
+    {
+      "relation_id": "82fed046-7b94-5444-b945-bd31f7ca0c32->cfcb8775-b20e-56cf-9669-e11ba21b75b6",
+      "relation_type": "REDUCES_TO",
+      "prerequisite_target_id": "82fed046-7b94-5444-b945-bd31f7ca0c32",
+      "dependent_target_id": "cfcb8775-b20e-56cf-9669-e11ba21b75b6"
+    },
+    {
+      "relation_id": "82fed046-7b94-5444-b945-bd31f7ca0c32->0375eab5-1c08-5a33-99ec-8c846cdf6da9",
+      "relation_type": "REDUCES_TO",
+      "prerequisite_target_id": "82fed046-7b94-5444-b945-bd31f7ca0c32",
+      "dependent_target_id": "0375eab5-1c08-5a33-99ec-8c846cdf6da9"
+    },
+    {
+      "relation_id": "e2a7e579-79b0-56a2-97f1-88a7db25c2f2->30cc4408-df77-5d66-b2e0-1ec66874f92f",
+      "relation_type": "REDUCES_TO",
+      "prerequisite_target_id": "e2a7e579-79b0-56a2-97f1-88a7db25c2f2",
+      "dependent_target_id": "30cc4408-df77-5d66-b2e0-1ec66874f92f"
+    },
+    {
+      "relation_id": "e2a7e579-79b0-56a2-97f1-88a7db25c2f2->32192ec2-d13f-5faa-bddf-9e90d0e00a2f",
+      "relation_type": "REDUCES_TO",
+      "prerequisite_target_id": "e2a7e579-79b0-56a2-97f1-88a7db25c2f2",
+      "dependent_target_id": "32192ec2-d13f-5faa-bddf-9e90d0e00a2f"
+    },
+    {
+      "relation_id": "e2a7e579-79b0-56a2-97f1-88a7db25c2f2->9ca7d055-9487-520e-ab8b-cba570319926",
+      "relation_type": "REDUCES_TO",
+      "prerequisite_target_id": "e2a7e579-79b0-56a2-97f1-88a7db25c2f2",
+      "dependent_target_id": "9ca7d055-9487-520e-ab8b-cba570319926"
+    },
+    {
+      "relation_id": "82fed046-7b94-5444-b945-bd31f7ca0c32->5c0350f1-caee-596b-973a-106622bc1513",
+      "relation_type": "REDUCES_TO",
+      "prerequisite_target_id": "82fed046-7b94-5444-b945-bd31f7ca0c32",
+      "dependent_target_id": "5c0350f1-caee-596b-973a-106622bc1513"
+    },
+    {
+      "relation_id": "82fed046-7b94-5444-b945-bd31f7ca0c32->634243aa-ccaa-54aa-9af5-9d10e606e9c0",
+      "relation_type": "REDUCES_TO",
+      "prerequisite_target_id": "82fed046-7b94-5444-b945-bd31f7ca0c32",
+      "dependent_target_id": "634243aa-ccaa-54aa-9af5-9d10e606e9c0"
+    },
+    {
+      "relation_id": "e2a7e579-79b0-56a2-97f1-88a7db25c2f2->11c9b3a7-c9f5-54f6-8435-215b9dd3c032",
+      "relation_type": "REDUCES_TO",
+      "prerequisite_target_id": "e2a7e579-79b0-56a2-97f1-88a7db25c2f2",
+      "dependent_target_id": "11c9b3a7-c9f5-54f6-8435-215b9dd3c032"
+    },
+    {
+      "relation_id": "e2a7e579-79b0-56a2-97f1-88a7db25c2f2->ad1fd21e-32e3-54ef-8f4e-2bdd44c7bad4",
+      "relation_type": "REDUCES_TO",
+      "prerequisite_target_id": "e2a7e579-79b0-56a2-97f1-88a7db25c2f2",
+      "dependent_target_id": "ad1fd21e-32e3-54ef-8f4e-2bdd44c7bad4"
+    },
+    {
+      "relation_id": "e2a7e579-79b0-56a2-97f1-88a7db25c2f2->3f676e55-980b-5861-85b6-baa206dd18d6",
+      "relation_type": "REDUCES_TO",
+      "prerequisite_target_id": "e2a7e579-79b0-56a2-97f1-88a7db25c2f2",
+      "dependent_target_id": "3f676e55-980b-5861-85b6-baa206dd18d6"
+    },
+    {
+      "relation_id": "82fed046-7b94-5444-b945-bd31f7ca0c32->64c0f278-4053-5cfb-8b54-47c1e01a6d5c",
+      "relation_type": "REDUCES_TO",
+      "prerequisite_target_id": "82fed046-7b94-5444-b945-bd31f7ca0c32",
+      "dependent_target_id": "64c0f278-4053-5cfb-8b54-47c1e01a6d5c"
+    },
+    {
+      "relation_id": "e2a7e579-79b0-56a2-97f1-88a7db25c2f2->7fc31036-7283-5076-92f9-02030d1dd4b2",
+      "relation_type": "REDUCES_TO",
+      "prerequisite_target_id": "e2a7e579-79b0-56a2-97f1-88a7db25c2f2",
+      "dependent_target_id": "7fc31036-7283-5076-92f9-02030d1dd4b2"
+    },
+    {
+      "relation_id": "82fed046-7b94-5444-b945-bd31f7ca0c32->7cb93f03-bac7-53ca-96f0-74fef851785c",
+      "relation_type": "REDUCES_TO",
+      "prerequisite_target_id": "82fed046-7b94-5444-b945-bd31f7ca0c32",
+      "dependent_target_id": "7cb93f03-bac7-53ca-96f0-74fef851785c"
+    },
+    {
+      "relation_id": "82fed046-7b94-5444-b945-bd31f7ca0c32->914e4eed-67a1-5f27-a15b-08f832ee00df",
+      "relation_type": "REDUCES_TO",
+      "prerequisite_target_id": "82fed046-7b94-5444-b945-bd31f7ca0c32",
+      "dependent_target_id": "914e4eed-67a1-5f27-a15b-08f832ee00df"
+    },
+    {
+      "relation_id": "82fed046-7b94-5444-b945-bd31f7ca0c32->0da2c26d-9bbb-5088-a2c3-480c5d21ee89",
+      "relation_type": "REDUCES_TO",
+      "prerequisite_target_id": "82fed046-7b94-5444-b945-bd31f7ca0c32",
+      "dependent_target_id": "0da2c26d-9bbb-5088-a2c3-480c5d21ee89"
+    },
+    {
+      "relation_id": "e2a7e579-79b0-56a2-97f1-88a7db25c2f2->f430ad0d-3fc5-53a3-a69f-207d093609c6",
+      "relation_type": "REDUCES_TO",
+      "prerequisite_target_id": "e2a7e579-79b0-56a2-97f1-88a7db25c2f2",
+      "dependent_target_id": "f430ad0d-3fc5-53a3-a69f-207d093609c6"
+    },
+    {
+      "relation_id": "82fed046-7b94-5444-b945-bd31f7ca0c32->38285a90-1a9a-53cf-a480-698b7f8032ce",
+      "relation_type": "REDUCES_TO",
+      "prerequisite_target_id": "82fed046-7b94-5444-b945-bd31f7ca0c32",
+      "dependent_target_id": "38285a90-1a9a-53cf-a480-698b7f8032ce"
+    },
+    {
+      "relation_id": "82fed046-7b94-5444-b945-bd31f7ca0c32->1e263212-8fa5-5c34-9a26-cfae9bd40d0f",
+      "relation_type": "REDUCES_TO",
+      "prerequisite_target_id": "82fed046-7b94-5444-b945-bd31f7ca0c32",
+      "dependent_target_id": "1e263212-8fa5-5c34-9a26-cfae9bd40d0f"
+    },
+    {
+      "relation_id": "82fed046-7b94-5444-b945-bd31f7ca0c32->0cbfa0d6-f6c2-5eb6-82b8-938c16483f9d",
+      "relation_type": "REDUCES_TO",
+      "prerequisite_target_id": "82fed046-7b94-5444-b945-bd31f7ca0c32",
+      "dependent_target_id": "0cbfa0d6-f6c2-5eb6-82b8-938c16483f9d"
+    },
+    {
+      "relation_id": "82fed046-7b94-5444-b945-bd31f7ca0c32->e799820c-9e5f-5e65-8290-adbe463c1f5e",
+      "relation_type": "REDUCES_TO",
+      "prerequisite_target_id": "82fed046-7b94-5444-b945-bd31f7ca0c32",
+      "dependent_target_id": "e799820c-9e5f-5e65-8290-adbe463c1f5e"
+    },
+    {
+      "relation_id": "82fed046-7b94-5444-b945-bd31f7ca0c32->e5b5d40c-969b-561d-9cf6-a5eccd91e39e",
+      "relation_type": "REDUCES_TO",
+      "prerequisite_target_id": "82fed046-7b94-5444-b945-bd31f7ca0c32",
+      "dependent_target_id": "e5b5d40c-969b-561d-9cf6-a5eccd91e39e"
+    },
+    {
+      "relation_id": "e2a7e579-79b0-56a2-97f1-88a7db25c2f2->e6a042ce-e81b-57ad-aa1a-b003a7f9e3fd",
+      "relation_type": "REDUCES_TO",
+      "prerequisite_target_id": "e2a7e579-79b0-56a2-97f1-88a7db25c2f2",
+      "dependent_target_id": "e6a042ce-e81b-57ad-aa1a-b003a7f9e3fd"
+    },
+    {
+      "relation_id": "82fed046-7b94-5444-b945-bd31f7ca0c32->8a973035-acff-5f79-a03f-0d1fde883ebc",
+      "relation_type": "REDUCES_TO",
+      "prerequisite_target_id": "82fed046-7b94-5444-b945-bd31f7ca0c32",
+      "dependent_target_id": "8a973035-acff-5f79-a03f-0d1fde883ebc"
+    },
+    {
+      "relation_id": "82fed046-7b94-5444-b945-bd31f7ca0c32->7d7d026e-84f1-5fee-a037-a969a0faf29c",
+      "relation_type": "REDUCES_TO",
+      "prerequisite_target_id": "82fed046-7b94-5444-b945-bd31f7ca0c32",
+      "dependent_target_id": "7d7d026e-84f1-5fee-a037-a969a0faf29c"
+    },
+    {
+      "relation_id": "82fed046-7b94-5444-b945-bd31f7ca0c32->063672f6-360e-570c-981e-8e5b475f2972",
+      "relation_type": "REDUCES_TO",
+      "prerequisite_target_id": "82fed046-7b94-5444-b945-bd31f7ca0c32",
+      "dependent_target_id": "063672f6-360e-570c-981e-8e5b475f2972"
+    },
+    {
+      "relation_id": "82fed046-7b94-5444-b945-bd31f7ca0c32->1b0dad8b-f948-57a7-a7d6-8ca43a61d51b",
+      "relation_type": "REDUCES_TO",
+      "prerequisite_target_id": "82fed046-7b94-5444-b945-bd31f7ca0c32",
+      "dependent_target_id": "1b0dad8b-f948-57a7-a7d6-8ca43a61d51b"
+    },
+    {
+      "relation_id": "82fed046-7b94-5444-b945-bd31f7ca0c32->afe1e838-7349-5627-930d-d1bd6a275018",
+      "relation_type": "REDUCES_TO",
+      "prerequisite_target_id": "82fed046-7b94-5444-b945-bd31f7ca0c32",
+      "dependent_target_id": "afe1e838-7349-5627-930d-d1bd6a275018"
+    },
+    {
+      "relation_id": "82fed046-7b94-5444-b945-bd31f7ca0c32->6b6b89e0-fa15-50f3-aabb-31c357eefb2e",
+      "relation_type": "REDUCES_TO",
+      "prerequisite_target_id": "82fed046-7b94-5444-b945-bd31f7ca0c32",
+      "dependent_target_id": "6b6b89e0-fa15-50f3-aabb-31c357eefb2e"
+    },
+    {
+      "relation_id": "82fed046-7b94-5444-b945-bd31f7ca0c32->cbdf9369-079d-5031-82de-21957b2cf493",
+      "relation_type": "REDUCES_TO",
+      "prerequisite_target_id": "82fed046-7b94-5444-b945-bd31f7ca0c32",
+      "dependent_target_id": "cbdf9369-079d-5031-82de-21957b2cf493"
+    }
+  ]
+}

@@ -1,0 +1,46 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/node_modules
+/.venv/
+
+# next.js
+/.next/
+/out/
+
+# production
+/build
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# env files
+.env*
+!.env.example
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+
+# Windows shell artifacts
+nul
+
+# Local agent/tooling artifacts
+.codex-logs/
+.roo/
+.roomodes
+__pycache__/
+
+# local/private plugin checkouts and generated model data
+/ham/
+/services/ham/
+.cache/
+*.pt
+*.npz
+*.pkl

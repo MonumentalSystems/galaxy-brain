@@ -1,0 +1,132 @@
+import assert from "node:assert/strict"
+import { readFile } from "node:fs/promises"
+import test from "node:test"
+
+const read = (path) => readFile(new URL(`../${path}`, import.meta.url), "utf8")
+  .then((source) => source.replaceAll("\r\n", "\n"))
+
+test("Atlas treats placeRef as reactive confirmation intent, not selection or placement", async () => {
+  const client = await read("app/atlas-v2/atlas-v2-client.tsx")
+  const intentStart = client.indexOf("const parsed = parseAtlasReferenceHandoff(window.location.search)")
+  const intentEnd = client.indexOf("\n\n  useEffect(() => {", intentStart)
+  const intentEffect = client.slice(intentStart, intentEnd)
+
+  assert.ok(intentStart >= 0 && intentEnd > intentStart)
+  assert.match(client, /const searchParams = useSearchParams\(\)/)
+  assert.match(client, /const reactiveAtlasSearch = searchParams\.toString\(\)/)
+  assert.match(client, /window\.addEventListener\("popstate", onPopState\)/)
+  assert.match(client, /parseAtlasReferenceHandoff\(window\.location\.search\)/)
+  assert.doesNotMatch(client, /parseAtlasReferenceHandoff\(\s*reactiveAtlasSearch/)
+  assert.match(intentEffect, /resolveReferenceHandoff\(parsed\.subjectRef/)
+  assert.match(intentEffect, /kind: parsed\.kind/)
+  assert.match(intentEffect, /objectId: parsed\.objectId/)
+  assert.doesNotMatch(intentEffect, /placeReference\(/)
+  assert.doesNotMatch(intentEffect, /setFocusPlacementId\(/)
+})
+
+test("Atlas clears only handoff intent while preserving history state and stale search snapshots", async () => {
+  const client = await read("app/atlas-v2/atlas-v2-client.tsx")
+
+  assert.match(client, /clearAtlasReferenceHandoffHref\(window\.location\.href\)/)
+  assert.match(client, /window\.history\.replaceState\(window\.history\.state, "", nextHref\)/)
+  assert.match(client, /preservedReferenceHandoffHrefRef\.current = preserveDialog \? nextHref : null/)
+  assert.match(client, /if \(preservedReferenceHandoffHrefRef\.current === currentHref\) return/)
+  assert.match(client, /const onPopState = \(\) => \{[\s\S]*?preservedReferenceHandoffHrefRef\.current = null/)
+  assert.match(client, /clearReferenceHandoffLocation\(false\)/)
+  assert.match(client, /clearReferenceHandoffLocation\(true\)/)
+})
+
+test("confirmation reauthorizes, synchronously fences, and mints one retryable operation afterward", async () => {
+  const client = await read("app/atlas-v2/atlas-v2-client.tsx")
+  const confirmStart = client.indexOf("const confirmReferenceHandoff = useCallback")
+  const confirmEnd = client.indexOf("const changePaperImportOpen", confirmStart)
+  const confirm = client.slice(confirmStart, confirmEnd)
+
+  const authorizeAt = confirm.indexOf("resolveReferenceHandoff(handoff.subjectRef")
+  const operationAt = confirm.indexOf("const operationId = handoff.operationId || crypto.randomUUID()")
+  const placementAt = confirm.indexOf("placeReference(authorized.subjectRef, operationId)")
+  assert.ok(confirmStart >= 0 && confirmEnd > confirmStart)
+  assert.match(confirm, /referenceHandoffBusyRef\.current/)
+  assert.match(confirm, /referenceHandoffGenerationRef\.current/)
+  assert.match(confirm, /referenceHandoffAbortRef\.current\?\.abort\(\)/)
+  assert.match(confirm, /kind: handoff\.kind/)
+  assert.match(confirm, /objectId: handoff\.objectId/)
+  assert.match(confirm, /sourceRevisionId: handoff\.sourceRevisionId/)
+  assert.ok(authorizeAt >= 0 && operationAt > authorizeAt && placementAt > operationAt)
+  assert.match(confirm, /phase: "placing",[\s\S]*?operationId,/)
+  assert.match(client, /referenceHandoffOperationRef\.current === operationId/)
+  assert.match(client, /setReferencePlacementRetry\(referencePlacementRequest\)/)
+})
+
+test("confirmed handoffs checkpoint the exact target before mutation and reconcile the same operation after reload", async () => {
+  const client = await read("app/atlas-v2/atlas-v2-client.tsx")
+  const fenceStart = client.indexOf("listAtlasReferenceHandoffPlacementRecoveries(")
+  const restoreStart = client.indexOf("listAtlasReferenceHandoffPlacementRecoveries(", fenceStart + 1)
+  const restoreEnd = client.indexOf("clearAtlasExactRepresentationCache", restoreStart)
+  const restore = client.slice(restoreStart, restoreEnd)
+  const bindStart = client.indexOf("const bindReferencePlacementTarget = useCallback")
+  const bindEnd = client.indexOf("const retryCreatedExperimentPlacement", bindStart)
+  const bind = client.slice(bindStart, bindEnd)
+  const completeStart = client.indexOf("const completeReferencePlacement = useCallback")
+  const completeEnd = client.indexOf("const failReferencePlacement", completeStart)
+  const complete = client.slice(completeStart, completeEnd)
+
+  assert.ok(restoreStart >= 0 && restoreEnd > restoreStart)
+  assert.match(restore, /candidate\.workspaceId === activeAtlasWorkspaceId/)
+  assert.match(restore, /resolveReferenceHandoff\(pending\.subjectRef/)
+  assert.match(restore, /operationId: pending\.operationId/)
+  assert.doesNotMatch(restore, /placeReference\(/)
+  assert.ok(bindStart >= 0 && bindEnd > bindStart)
+  assert.match(bind, /const handoff = referenceHandoffPlacementBindingRef\.current/)
+  assert.match(bind, /const recovery = referenceHandoffRecoveryRecordRef\.current/)
+  assert.match(bind, /writeAtlasReferenceHandoffPlacementRecovery\(/)
+  assert.match(bind, /workspaceId: atlas\.workspaceId,[\s\S]*?canvasId,[\s\S]*?subjectRef: handoff\.subjectRef/)
+  assert.match(bind, /kind: handoff\.kind,[\s\S]*?objectId: handoff\.objectId,[\s\S]*?sourceRevisionId: handoff\.sourceRevisionId/)
+  assert.doesNotMatch(bind, /\], \[[^\]]*referenceHandoff(?:Recovery)?[,\]]/)
+  assert.ok(completeStart >= 0 && completeEnd > completeStart)
+  assert.match(complete, /removeAtlasReferenceHandoffPlacementRecovery\([\s\S]*?completion\.operationId/)
+})
+
+test("a pending journal fences fresh URL intent and recovery authorization is not self-aborted by state updates", async () => {
+  const client = await read("app/atlas-v2/atlas-v2-client.tsx")
+  const intentStart = client.indexOf("const parsed = parseAtlasReferenceHandoff(window.location.search)")
+  const restoreEffectStart = client.indexOf("if (preview || typeof window === \"undefined\" || !activeAtlasWorkspaceId || referencePlacementRequest) return")
+  const restoreEffectEnd = client.indexOf("useEffect(() => () => {", restoreEffectStart)
+  const intent = client.slice(intentStart, restoreEffectStart)
+  const restore = client.slice(restoreEffectStart, restoreEffectEnd)
+
+  assert.match(intent, /if \(pending\) \{[\s\S]*?clearReferenceHandoffLocation\(true\)[\s\S]*?return/)
+  assert.ok(intent.indexOf("if (pending)") < intent.indexOf("resolveReferenceHandoff(parsed.subjectRef"))
+  assert.match(restore, /setReferenceHandoffRecovery\(pending\)[\s\S]*?resolveReferenceHandoff\(pending\.subjectRef/)
+  assert.doesNotMatch(restore, /referenceHandoff,\s*\n|referenceHandoffRecovery,\s*\n/)
+})
+
+test("destination dialog is modal, reflow-safe, status-announced, and double-submit safe", async () => {
+  const [client, dialog] = await Promise.all([
+    read("app/atlas-v2/atlas-v2-client.tsx"),
+    read("components/atlas/reference-handoff-dialog.tsx"),
+  ])
+
+  assert.match(client, /<ReferenceHandoffDialog/)
+  assert.match(client, /kind=\{referenceHandoff\?\.kind\}/)
+  assert.match(client, /onConfirm=\{confirmReferenceHandoff\}/)
+  assert.match(client, /onCancel=\{cancelReferenceHandoff\}/)
+  assert.match(client, /returnFocus=\{commandTriggerRef\.current \|\| atlasHeadingRef\.current\}/)
+  assert.match(dialog, /max-h-\[calc\(100dvh-1rem\)\]/)
+  assert.match(dialog, /overflow-y-auto/)
+  assert.match(dialog, /w-\[calc\(100vw-1rem\)\]/)
+  assert.match(dialog, /onOpenAutoFocus=/)
+  assert.match(dialog, /onCloseAutoFocus=/)
+  assert.match(dialog, /role="status"/)
+  assert.match(dialog, /aria-live="polite"/)
+  assert.match(dialog, /role="alert"/)
+  assert.match(dialog, /aria-busy=\{loading \|\| confirmed\}/)
+  assert.match(dialog, /disabled=\{loading \|\| confirmed \|\| !canConfirm\}/)
+  assert.match(dialog, /min-h-11 w-full sm:w-auto/)
+  assert.match(dialog, /if \(kind === "chat"\) return "conversation snapshot"/)
+  assert.match(dialog, /if \(kind === "document"\) return "document"/)
+  assert.match(dialog, /if \(kind === "surface"\) return "Generous surface"/)
+  assert.match(dialog, /return "object"/)
+  assert.doesNotMatch(dialog, /<input|<textarea/i)
+  assert.match(dialog, /Nothing is placed until you confirm\./)
+})

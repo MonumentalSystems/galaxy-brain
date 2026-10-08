@@ -1,0 +1,49 @@
+# Galaxy Brain agent guide
+
+Galaxy Brain uses Nostr public keys as canonical external identities. Use the
+same independently revocable agent key in Galaxy Brain, HAM, and Hyades. Do not
+invent an agent ID and never give an agent a human's Nostr secret key.
+
+## Create or load the agent key
+
+1. If `HAM_NOSTR_SECRET_KEY` is configured, run `ham identity show` and reuse
+   that agent public key.
+2. Otherwise run `ham identity generate`. Put the resulting `nsec` in the
+   agent's local secret store as `HAM_NOSTR_SECRET_KEY`.
+3. Never send the `nsec` through a form, API, log, commit, chat, or shared
+   memory. Give administrators only the 64-character hexadecimal public key.
+4. Ask a Nostr-authenticated Galaxy tenant owner to register the public key with
+   `POST /api/agents`. Register that same public key with HAM and Hyades when the
+   agent needs those services. There are no Galaxy scope selections.
+
+HAM's current key and signing setup is documented at:
+https://ham.flobots.xyz/llms.txt
+
+## Sign Galaxy Brain requests
+
+Agent calls to `/api/eln/*` use an `Authorization: Nostr <base64-event>` header.
+Create a fresh NIP-98 kind-27235 event for every request:
+
+- `content` is empty.
+- the `u` tag is the exact public request URL, including its query string;
+- the `method` tag is the uppercase HTTP method;
+- for a non-empty body, the `payload` tag is the lowercase SHA-256 hex digest
+  of the exact transmitted bytes;
+- `created_at` is current, and the event is signed by the registered agent key.
+
+Galaxy Brain verifies the signature and exact bindings, rejects stale or future
+timestamps, and atomically rejects reuse of an event ID. A successful identity
+proof authorizes the registered principal throughout its Galaxy tenant; project,
+scope, and private labels do not create additional permission boundaries.
+
+## Authorization boundaries
+
+- Galaxy Brain authentication grants tenant-wide API access while preserving
+  tenant isolation and request-bound Nostr proof for sensitive mutations.
+- HAM projects and legacy scope strings organize topics and navigation; they do
+  not grant or limit permissions.
+- Hyades capabilities and approvals authorize workflow execution.
+- GitHub independently authorizes repository operations.
+
+A task record, project association, or public key alone does not authorize
+workflow execution or GitHub access.

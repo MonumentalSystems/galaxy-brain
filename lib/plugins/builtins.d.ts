@@ -1,0 +1,18 @@
+import type { GalaxyPluginPackage, GalaxyPluginRegistry } from "./registry.js"
+
+export const HAM_PLUGIN_PACKAGE: GalaxyPluginPackage
+export const DOCLING_PLUGIN_PACKAGE: GalaxyPluginPackage
+export const MARKITDOWN_PLUGIN_PACKAGE: GalaxyPluginPackage
+export const PLAIN_TEXT_PLUGIN_PACKAGE: GalaxyPluginPackage
+export const DOCUMENTS_PLUGIN_PACKAGE: GalaxyPluginPackage
+export const DATASOURCES_PLUGIN_PACKAGE: GalaxyPluginPackage
+export const WEB_CAPTURE_PLUGIN_PACKAGE: GalaxyPluginPackage
+export const PAPERS_PLUGIN_PACKAGE: GalaxyPluginPackage
+export const ELN_PLUGIN_PACKAGE: GalaxyPluginPackage
+export const CODE_PLUGIN_PACKAGE: GalaxyPluginPackage
+export const VOICE_PLUGIN_PACKAGE: GalaxyPluginPackage
+export const GENEROUS_PLUGIN_PACKAGE: GalaxyPluginPackage
+export const TASKS_PLUGIN_PACKAGE: GalaxyPluginPackage
+export const ATLAS_PLUGIN_PACKAGE: GalaxyPluginPackage
+export const BUILTIN_PLUGIN_PACKAGES: readonly GalaxyPluginPackage[]
+export const builtinPluginRegistry: GalaxyPluginRegistry

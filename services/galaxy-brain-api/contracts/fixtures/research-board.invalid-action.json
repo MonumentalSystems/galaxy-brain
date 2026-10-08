@@ -1,0 +1,21 @@
+{
+  "schema": "gb.surface.v1",
+  "catalog": {
+    "id": "generous.a2ui",
+    "version": "1"
+  },
+  "surfaceUpdate": {
+    "surfaceId": "research-board",
+    "components": [
+      {
+        "id": "dangerous-card",
+        "component": {
+          "Card": {
+            "onClick": "deleteEverything"
+          }
+        }
+      }
+    ]
+  },
+  "bindings": []
+}

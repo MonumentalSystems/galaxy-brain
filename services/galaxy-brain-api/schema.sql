@@ -1,0 +1,3 @@
+-- Compatibility pointer for older operational documentation.
+-- The authoritative schema is db/migrations and is applied only by the
+-- fail-closed database migration job. The API runtime never executes this file.

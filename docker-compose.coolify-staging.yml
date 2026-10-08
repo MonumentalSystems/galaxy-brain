@@ -1,0 +1,32 @@
+services:
+  # Coolify expands nested Compose fallbacks while rendering a deployment.
+  # The staging application stores these deploy aliases as direct, scoped
+  # values, so project them without a second interpolation layer here.
+  postgres:
+    environment:
+      POSTGRES_PASSWORD: ${GALAXY_DEPLOY_POSTGRES_PASSWORD:?Set GALAXY_DEPLOY_POSTGRES_PASSWORD in Coolify}
+
+  migrate:
+    environment:
+      DATABASE_MIGRATION_URL: ${GALAXY_DEPLOY_DATABASE_MIGRATION_URL:?Set GALAXY_DEPLOY_DATABASE_MIGRATION_URL in Coolify}
+
+  docling:
+    environment:
+      DOCLING_SERVE_API_KEY: ${GALAXY_DEPLOY_DOCLING_API_KEY:?Set GALAXY_DEPLOY_DOCLING_API_KEY in Coolify}
+
+  markitdown:
+    environment:
+      MARKITDOWN_PROXY_TOKEN: ${GALAXY_DEPLOY_MARKITDOWN_PROXY_TOKEN:?Set GALAXY_DEPLOY_MARKITDOWN_PROXY_TOKEN in Coolify}
+
+  galaxy-brain-api:
+    environment:
+      GB_DATABASE_URL: ${GALAXY_DEPLOY_GB_DATABASE_URL:?Set GALAXY_DEPLOY_GB_DATABASE_URL in Coolify}
+      GALAXY_API_PROXY_TOKEN: ${GALAXY_DEPLOY_GALAXY_API_PROXY_TOKEN:?Set GALAXY_DEPLOY_GALAXY_API_PROXY_TOKEN in Coolify}
+      DOCLING_API_KEY: ${GALAXY_DEPLOY_DOCLING_API_KEY:?Set GALAXY_DEPLOY_DOCLING_API_KEY in Coolify}
+      MARKITDOWN_PROXY_TOKEN: ${GALAXY_DEPLOY_MARKITDOWN_PROXY_TOKEN:?Set GALAXY_DEPLOY_MARKITDOWN_PROXY_TOKEN in Coolify}
+
+  web:
+    environment:
+      DATABASE_URL: ${GALAXY_DEPLOY_DATABASE_URL:?Set GALAXY_DEPLOY_DATABASE_URL in Coolify}
+      GALAXY_API_PROXY_TOKEN: ${GALAXY_DEPLOY_GALAXY_API_PROXY_TOKEN:?Set GALAXY_DEPLOY_GALAXY_API_PROXY_TOKEN in Coolify}
+      MARKITDOWN_PROXY_TOKEN: ${GALAXY_DEPLOY_MARKITDOWN_PROXY_TOKEN:?Set GALAXY_DEPLOY_MARKITDOWN_PROXY_TOKEN in Coolify}

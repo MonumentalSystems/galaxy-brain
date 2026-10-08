@@ -1,0 +1,1445 @@
+{
+  "format": "galaxy.surface-contract",
+  "manifestVersion": 1,
+  "schema": {
+    "id": "gb.surface.v1",
+    "description": "A bounded, presentation-only surface update with stable component identifiers and declared Galaxy bindings.",
+    "topLevelProperties": [
+      "schema",
+      "catalog",
+      "surfaceUpdate",
+      "bindings"
+    ],
+    "bounds": {
+      "maxComponents": 64,
+      "maxBindings": 64,
+      "maxJsonBytes": 262144,
+      "maxStringLength": 20000,
+      "maxDepth": 10,
+      "maxValueNodes": 4096
+    },
+    "identifierPattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$",
+    "forbiddenPropertyNames": [
+      "action",
+      "actions",
+      "constructor",
+      "dangerouslySetInnerHTML",
+      "handler",
+      "prototype",
+      "script",
+      "srcDoc",
+      "__proto__"
+    ],
+    "forbiddenPropertyPattern": "^on[A-Z_]",
+    "forbiddenStringFragments": [
+      "javascript:",
+      "<script"
+    ]
+  },
+  "catalog": {
+    "id": "generous.a2ui",
+    "version": "1",
+    "renderer": {
+      "id": "generous-works",
+      "version": "29250eba64b8dfd89c2307a0f4a4a5193cb129fc"
+    },
+    "bindingKinds": {
+      "galaxy.eln.experiment": {
+        "selectors": [
+          "resourceId",
+          "query"
+        ],
+        "resourceIdSchema": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "querySchema": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "status": {
+              "enum": [
+                "hypothesis",
+                "running",
+                "complete",
+                "abandoned"
+              ]
+            },
+            "domain": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 120
+            },
+            "aggregate": {
+              "const": "status"
+            },
+            "limit": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 500
+            }
+          }
+        }
+      },
+      "galaxy.eln.hypothesis": {
+        "selectors": [
+          "resourceId",
+          "query"
+        ],
+        "resourceIdSchema": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "querySchema": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "status": {
+              "enum": [
+                "open",
+                "confirmed",
+                "refuted",
+                "superseded"
+              ]
+            },
+            "domain": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 120
+            },
+            "aggregate": {
+              "const": "status"
+            },
+            "limit": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 500
+            }
+          }
+        }
+      },
+      "galaxy.ham.task": {
+        "selectors": [
+          "resourceId",
+          "query"
+        ],
+        "resourceIdSchema": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "querySchema": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "status": {
+              "enum": [
+                "pending",
+                "claimed",
+                "running",
+                "needs_clarification",
+                "blocked",
+                "completed",
+                "cancelled",
+                "failed",
+                "stalled"
+              ]
+            },
+            "limit": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 500
+            }
+          }
+        }
+      }
+    },
+    "components": {
+      "Badge": {
+        "description": "Compact status label rendered by the Generous A2UI Badge adapter.",
+        "bindingTargets": [
+          "text",
+          "variant"
+        ],
+        "propsSchema": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "text"
+          ],
+          "properties": {
+            "text": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 500
+            },
+            "variant": {
+              "enum": [
+                "filled",
+                "outline",
+                "secondary",
+                "destructive"
+              ]
+            }
+          }
+        }
+      },
+      "Card": {
+        "description": "Presentational container; content is supplied through child component references.",
+        "bindingTargets": [],
+        "propsSchema": {
+          "type": "object",
+          "additionalProperties": false,
+          "maxProperties": 0
+        }
+      },
+      "Charts": {
+        "description": "Read-only Generous chart using its current serializable data and options contract.",
+        "bindingTargets": [
+          "data",
+          "data.series",
+          "data.data",
+          "data.stages",
+          "data.value"
+        ],
+        "propsSchema": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "data"
+          ],
+          "properties": {
+            "data": {
+              "type": "object",
+              "minProperties": 1,
+              "maxProperties": 24,
+              "properties": {
+                "title": {
+                  "type": "string",
+                  "maxLength": 500
+                },
+                "type": {
+                  "enum": [
+                    "line",
+                    "bar",
+                    "pie",
+                    "scatter",
+                    "area",
+                    "radar",
+                    "histogram",
+                    "heatmap",
+                    "funnel",
+                    "gauge",
+                    "candlestick",
+                    "sankey",
+                    "chord",
+                    "treemap",
+                    "forceDirected",
+                    "hierarchy",
+                    "wordCloud",
+                    "venn"
+                  ]
+                },
+                "series": {
+                  "type": "array",
+                  "maxItems": 32,
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "name",
+                      "data"
+                    ],
+                    "properties": {
+                      "name": {
+                        "type": "string",
+                        "maxLength": 200
+                      },
+                      "color": {
+                        "type": "string",
+                        "maxLength": 100
+                      },
+                      "data": {
+                        "type": "array",
+                        "maxItems": 1000,
+                        "items": {
+                          "type": "object",
+                          "additionalProperties": false,
+                          "required": [
+                            "x",
+                            "y"
+                          ],
+                          "properties": {
+                            "x": {
+                              "type": [
+                                "string",
+                                "number"
+                              ]
+                            },
+                            "y": {
+                              "type": "number"
+                            },
+                            "label": {
+                              "type": "string",
+                              "maxLength": 500
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "data": {
+                  "type": "array",
+                  "maxItems": 2000
+                },
+                "stages": {
+                  "type": "array",
+                  "maxItems": 200
+                },
+                "value": {
+                  "type": "number"
+                },
+                "min": {
+                  "type": "number"
+                },
+                "max": {
+                  "type": "number"
+                },
+                "target": {
+                  "type": "number"
+                },
+                "sankeyNodes": {
+                  "type": "array",
+                  "maxItems": 500
+                },
+                "sankeyLinks": {
+                  "type": "array",
+                  "maxItems": 1000
+                },
+                "chordNodes": {
+                  "type": "array",
+                  "maxItems": 500
+                },
+                "chordLinks": {
+                  "type": "array",
+                  "maxItems": 1000
+                },
+                "treeMapData": {
+                  "type": "array",
+                  "maxItems": 500
+                },
+                "graphNodes": {
+                  "type": "array",
+                  "maxItems": 500
+                },
+                "graphLinks": {
+                  "type": "array",
+                  "maxItems": 1000
+                },
+                "hierarchyData": {
+                  "type": "object"
+                },
+                "words": {
+                  "type": "array",
+                  "maxItems": 1000
+                },
+                "vennSets": {
+                  "type": "array",
+                  "maxItems": 100
+                },
+                "vennIntersections": {
+                  "type": "array",
+                  "maxItems": 500
+                },
+                "ranges": {
+                  "type": "array",
+                  "maxItems": 100
+                },
+                "showVolume": {
+                  "type": "boolean"
+                },
+                "binCount": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 500
+                },
+                "xAxis": {
+                  "type": "object"
+                },
+                "yAxis": {
+                  "type": "object"
+                }
+              },
+              "anyOf": [
+                {
+                  "required": [
+                    "series"
+                  ]
+                },
+                {
+                  "required": [
+                    "data"
+                  ]
+                },
+                {
+                  "required": [
+                    "stages"
+                  ]
+                },
+                {
+                  "required": [
+                    "value"
+                  ]
+                },
+                {
+                  "required": [
+                    "sankeyNodes"
+                  ]
+                },
+                {
+                  "required": [
+                    "chordNodes"
+                  ]
+                },
+                {
+                  "required": [
+                    "treeMapData"
+                  ]
+                },
+                {
+                  "required": [
+                    "graphNodes"
+                  ]
+                },
+                {
+                  "required": [
+                    "hierarchyData"
+                  ]
+                },
+                {
+                  "required": [
+                    "words"
+                  ]
+                },
+                {
+                  "required": [
+                    "vennSets"
+                  ]
+                }
+              ]
+            },
+            "options": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "height": {
+                  "type": [
+                    "number",
+                    "string"
+                  ]
+                },
+                "width": {
+                  "type": [
+                    "number",
+                    "string"
+                  ]
+                },
+                "animated": {
+                  "type": "boolean"
+                },
+                "showLegend": {
+                  "type": "boolean"
+                },
+                "theme": {
+                  "enum": [
+                    "light",
+                    "dark"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "Column": {
+        "description": "Vertical A2UI flex layout.",
+        "bindingTargets": [],
+        "propsSchema": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "distribution": {
+              "enum": [
+                "start",
+                "center",
+                "end",
+                "spaceBetween",
+                "spaceAround",
+                "spaceEvenly"
+              ]
+            },
+            "align": {
+              "enum": [
+                "start",
+                "center",
+                "end",
+                "stretch"
+              ]
+            }
+          }
+        }
+      },
+      "DataTable": {
+        "description": "Read-only Generous data table using serializable columns, rows, and display options.",
+        "bindingTargets": [
+          "data",
+          "data.rows"
+        ],
+        "propsSchema": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "data"
+          ],
+          "properties": {
+            "data": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "columns",
+                "rows"
+              ],
+              "properties": {
+                "title": {
+                  "type": "string",
+                  "maxLength": 500
+                },
+                "columns": {
+                  "type": "array",
+                  "minItems": 1,
+                  "maxItems": 64,
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "id",
+                      "header"
+                    ],
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 128
+                      },
+                      "header": {
+                        "type": "string",
+                        "maxLength": 500
+                      },
+                      "accessorKey": {
+                        "type": "string",
+                        "maxLength": 128
+                      },
+                      "width": {
+                        "type": "number",
+                        "minimum": 1,
+                        "maximum": 4096
+                      },
+                      "minWidth": {
+                        "type": "number",
+                        "minimum": 1,
+                        "maximum": 4096
+                      },
+                      "maxWidth": {
+                        "type": "number",
+                        "minimum": 1,
+                        "maximum": 4096
+                      },
+                      "enableSorting": {
+                        "type": "boolean"
+                      },
+                      "enableFiltering": {
+                        "type": "boolean"
+                      },
+                      "align": {
+                        "enum": [
+                          "left",
+                          "center",
+                          "right"
+                        ]
+                      }
+                    }
+                  }
+                },
+                "rows": {
+                  "type": "array",
+                  "maxItems": 2000,
+                  "items": {
+                    "type": "object",
+                    "maxProperties": 128
+                  }
+                }
+              }
+            },
+            "options": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "height": {
+                  "type": [
+                    "number",
+                    "string"
+                  ]
+                },
+                "width": {
+                  "type": [
+                    "number",
+                    "string"
+                  ]
+                },
+                "enableSorting": {
+                  "type": "boolean"
+                },
+                "enableFiltering": {
+                  "type": "boolean"
+                },
+                "enablePagination": {
+                  "type": "boolean"
+                },
+                "pageSize": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 500
+                },
+                "pageSizeOptions": {
+                  "type": "array",
+                  "maxItems": 20,
+                  "items": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 500
+                  }
+                },
+                "enableRowSelection": {
+                  "type": "boolean"
+                },
+                "enableMultiRowSelection": {
+                  "type": "boolean"
+                },
+                "striped": {
+                  "type": "boolean"
+                },
+                "bordered": {
+                  "type": "boolean"
+                },
+                "compact": {
+                  "type": "boolean"
+                },
+                "stickyHeader": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      },
+      "Grid": {
+        "description": "Bounded A2UI grid layout.",
+        "bindingTargets": [],
+        "propsSchema": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "columns": {
+              "oneOf": [
+                {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 12
+                },
+                {
+                  "type": "string",
+                  "maxLength": 100
+                }
+              ]
+            },
+            "gap": {
+              "enum": [
+                "0",
+                "1",
+                "2",
+                "3",
+                "4",
+                "5",
+                "6",
+                "8",
+                "10",
+                "12"
+              ]
+            }
+          }
+        }
+      },
+      "Heading": {
+        "description": "A2UI heading alias rendered from text and a heading usage hint.",
+        "bindingTargets": [
+          "text"
+        ],
+        "propsSchema": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "text"
+          ],
+          "properties": {
+            "text": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 2000
+            },
+            "usageHint": {
+              "enum": [
+                "h1",
+                "h2",
+                "h3",
+                "h4",
+                "h5",
+                "h6"
+              ]
+            }
+          }
+        }
+      },
+      "KnowledgeGraph": {
+        "description": "Bounded entity-relationship graph with no executable behavior or network sources.",
+        "bindingTargets": [
+          "data",
+          "data.entities",
+          "data.relationships"
+        ],
+        "propsSchema": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "data"
+          ],
+          "properties": {
+            "title": {
+              "type": "string",
+              "maxLength": 500
+            },
+            "data": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "entities",
+                "relationships"
+              ],
+              "properties": {
+                "entities": {
+                  "type": "array",
+                  "minItems": 1,
+                  "maxItems": 500,
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "id",
+                      "label",
+                      "type"
+                    ],
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 128
+                      },
+                      "label": {
+                        "type": "string",
+                        "maxLength": 500
+                      },
+                      "type": {
+                        "enum": [
+                          "person",
+                          "organization",
+                          "concept",
+                          "location",
+                          "event",
+                          "document",
+                          "custom"
+                        ]
+                      },
+                      "description": {
+                        "type": "string",
+                        "maxLength": 5000
+                      },
+                      "properties": {
+                        "type": "object",
+                        "maxProperties": 64
+                      },
+                      "metadata": {
+                        "type": "object",
+                        "maxProperties": 64
+                      }
+                    }
+                  }
+                },
+                "relationships": {
+                  "type": "array",
+                  "maxItems": 1000,
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "id",
+                      "source",
+                      "target",
+                      "type"
+                    ],
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "maxLength": 128
+                      },
+                      "source": {
+                        "type": "string",
+                        "maxLength": 128
+                      },
+                      "target": {
+                        "type": "string",
+                        "maxLength": 128
+                      },
+                      "type": {
+                        "type": "string",
+                        "maxLength": 128
+                      },
+                      "label": {
+                        "type": "string",
+                        "maxLength": 500
+                      },
+                      "bidirectional": {
+                        "type": "boolean"
+                      },
+                      "properties": {
+                        "type": "object",
+                        "maxProperties": 64
+                      }
+                    },
+                    "additionalProperties": false
+                  }
+                }
+              }
+            },
+            "options": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "layout": {
+                  "enum": [
+                    "force",
+                    "hierarchical",
+                    "radial",
+                    "manual"
+                  ]
+                },
+                "showLabels": {
+                  "type": "boolean"
+                },
+                "showTypes": {
+                  "type": "boolean"
+                },
+                "interactive": {
+                  "type": "boolean"
+                },
+                "colorScheme": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "string",
+                    "maxLength": 100
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "Markdown": {
+        "description": "Markdown rendered in preview-only mode for promoted surfaces.",
+        "bindingTargets": [
+          "data",
+          "data.content"
+        ],
+        "propsSchema": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "data"
+          ],
+          "properties": {
+            "data": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "content"
+              ],
+              "properties": {
+                "content": {
+                  "type": "string",
+                  "maxLength": 20000
+                },
+                "title": {
+                  "type": "string",
+                  "maxLength": 500
+                }
+              }
+            },
+            "options": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "height": {
+                  "type": [
+                    "number",
+                    "string"
+                  ]
+                },
+                "width": {
+                  "type": [
+                    "number",
+                    "string"
+                  ]
+                },
+                "mode": {
+                  "const": "preview"
+                },
+                "preview": {
+                  "const": "preview"
+                },
+                "hideToolbar": {
+                  "type": "boolean"
+                },
+                "enableScroll": {
+                  "type": "boolean"
+                },
+                "highlightEnable": {
+                  "type": "boolean"
+                },
+                "visiableDragbar": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      },
+      "Row": {
+        "description": "Horizontal A2UI flex layout.",
+        "bindingTargets": [],
+        "propsSchema": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "distribution": {
+              "enum": [
+                "start",
+                "center",
+                "end",
+                "spaceBetween",
+                "spaceAround",
+                "spaceEvenly"
+              ]
+            },
+            "align": {
+              "enum": [
+                "start",
+                "center",
+                "end",
+                "stretch"
+              ]
+            }
+          }
+        }
+      },
+      "Separator": {
+        "description": "Presentational A2UI separator.",
+        "bindingTargets": [],
+        "propsSchema": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "orientation": {
+              "enum": [
+                "horizontal",
+                "vertical"
+              ]
+            },
+            "decorative": {
+              "type": "boolean"
+            }
+          }
+        }
+      },
+      "Stack": {
+        "description": "Alias of the vertical Column A2UI adapter.",
+        "bindingTargets": [],
+        "propsSchema": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "distribution": {
+              "enum": [
+                "start",
+                "center",
+                "end",
+                "spaceBetween",
+                "spaceAround",
+                "spaceEvenly"
+              ]
+            },
+            "align": {
+              "enum": [
+                "start",
+                "center",
+                "end",
+                "stretch"
+              ]
+            }
+          }
+        }
+      },
+      "StatsDisplay": {
+        "description": "Serializable read-only KPI display from Generous Tool UI.",
+        "bindingTargets": [
+          "stats"
+        ],
+        "propsSchema": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "stats"
+          ],
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "role": {
+              "enum": [
+                "information",
+                "decision",
+                "control",
+                "state",
+                "composite"
+              ]
+            },
+            "title": {
+              "type": "string",
+              "maxLength": 500
+            },
+            "description": {
+              "type": "string",
+              "maxLength": 2000
+            },
+            "stats": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 64,
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "key",
+                  "label",
+                  "value"
+                ],
+                "properties": {
+                  "key": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 128
+                  },
+                  "label": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 500
+                  },
+                  "value": {
+                    "type": [
+                      "string",
+                      "number"
+                    ]
+                  },
+                  "format": {
+                    "type": "object",
+                    "required": [
+                      "kind"
+                    ],
+                    "properties": {
+                      "kind": {
+                        "enum": [
+                          "text",
+                          "number",
+                          "currency",
+                          "percent"
+                        ]
+                      },
+                      "currency": {
+                        "type": "string",
+                        "maxLength": 12
+                      },
+                      "decimals": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 12
+                      },
+                      "compact": {
+                        "type": "boolean"
+                      },
+                      "basis": {
+                        "enum": [
+                          "fraction",
+                          "unit"
+                        ]
+                      }
+                    },
+                    "additionalProperties": false
+                  },
+                  "diff": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "number"
+                      },
+                      "decimals": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 12
+                      },
+                      "upIsPositive": {
+                        "type": "boolean"
+                      },
+                      "label": {
+                        "type": "string",
+                        "maxLength": 500
+                      }
+                    }
+                  },
+                  "sparkline": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "data"
+                    ],
+                    "properties": {
+                      "data": {
+                        "type": "array",
+                        "minItems": 2,
+                        "maxItems": 500,
+                        "items": {
+                          "type": "number"
+                        }
+                      },
+                      "color": {
+                        "type": "string",
+                        "maxLength": 100
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "Text": {
+        "description": "Bounded text rendered by the Generous A2UI typography adapter.",
+        "bindingTargets": [
+          "text"
+        ],
+        "propsSchema": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "text"
+          ],
+          "properties": {
+            "text": {
+              "type": "string",
+              "maxLength": 20000
+            },
+            "usageHint": {
+              "enum": [
+                "body",
+                "caption",
+                "h1",
+                "h2",
+                "h3",
+                "h4",
+                "h5",
+                "h6"
+              ]
+            }
+          }
+        }
+      },
+      "Timeline": {
+        "description": "Bounded TimelineJS event sequence with declarative dates and media URLs.",
+        "bindingTargets": [
+          "data",
+          "data.events"
+        ],
+        "propsSchema": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "data"
+          ],
+          "properties": {
+            "data": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "events"
+              ],
+              "properties": {
+                "events": {
+                  "type": "array",
+                  "maxItems": 500,
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "unique_id": {
+                        "type": "string",
+                        "maxLength": 128
+                      },
+                      "start_date": {
+                        "type": "object",
+                        "required": [
+                          "year"
+                        ],
+                        "properties": {
+                          "year": {
+                            "type": "integer"
+                          },
+                          "month": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 12
+                          },
+                          "day": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 31
+                          },
+                          "display_date": {
+                            "type": "string",
+                            "maxLength": 500
+                          }
+                        },
+                        "additionalProperties": false
+                      },
+                      "end_date": {
+                        "type": "object"
+                      },
+                      "text": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "properties": {
+                          "headline": {
+                            "type": "string",
+                            "maxLength": 1000
+                          },
+                          "text": {
+                            "type": "string",
+                            "maxLength": 10000
+                          }
+                        }
+                      },
+                      "media": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "required": [
+                          "url"
+                        ],
+                        "properties": {
+                          "url": {
+                            "type": "string",
+                            "maxLength": 2000
+                          },
+                          "caption": {
+                            "type": "string",
+                            "maxLength": 2000
+                          },
+                          "credit": {
+                            "type": "string",
+                            "maxLength": 1000
+                          },
+                          "alt": {
+                            "type": "string",
+                            "maxLength": 1000
+                          }
+                        }
+                      },
+                      "group": {
+                        "type": "string",
+                        "maxLength": 500
+                      },
+                      "display_date": {
+                        "type": "string",
+                        "maxLength": 500
+                      },
+                      "autolink": {
+                        "type": "boolean"
+                      }
+                    }
+                  }
+                },
+                "scale": {
+                  "enum": [
+                    "human",
+                    "cosmological"
+                  ]
+                }
+              }
+            },
+            "options": {
+              "type": "object",
+              "maxProperties": 16,
+              "properties": {
+                "height": {
+                  "type": [
+                    "number",
+                    "string"
+                  ]
+                },
+                "width": {
+                  "type": [
+                    "number",
+                    "string"
+                  ]
+                },
+                "language": {
+                  "type": "string",
+                  "maxLength": 20
+                },
+                "start_at_end": {
+                  "type": "boolean"
+                },
+                "start_at_slide": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 499
+                },
+                "timenav_position": {
+                  "enum": [
+                    "top",
+                    "bottom"
+                  ]
+                }
+              },
+              "additionalProperties": false
+            }
+          }
+        }
+      },
+      "Title": {
+        "description": "A2UI title alias rendered from text and a heading usage hint.",
+        "bindingTargets": [
+          "text"
+        ],
+        "propsSchema": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "text"
+          ],
+          "properties": {
+            "text": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 2000
+            },
+            "usageHint": {
+              "enum": [
+                "h1",
+                "h2",
+                "h3",
+                "h4",
+                "h5",
+                "h6"
+              ]
+            }
+          }
+        }
+      },
+      "SVGPreview": {
+        "description": "Static SVG drawing. Rendered by rebuilding an allowlisted subset of elements and attributes, never by injecting the source as markup.",
+        "bindingTargets": [],
+        "propsSchema": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "svg"
+          ],
+          "properties": {
+            "svg": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 20000,
+              "pattern": "^\\s*(<\\?xml[^>]*\\?>\\s*)?(<!--(?:[^-]|-(?!->))*-->\\s*)*<[sS][vV][gG][\\s>/]",
+              "not": {
+                "pattern": "<!\\s*([dD][oO][cC][tT][yY][pP][eE]|[eE][nN][tT][iI][tT][yY])"
+              }
+            },
+            "title": {
+              "type": "string",
+              "maxLength": 500
+            },
+            "filename": {
+              "type": "string",
+              "maxLength": 200
+            },
+            "width": {
+              "anyOf": [
+                {
+                  "type": "number",
+                  "exclusiveMinimum": 0,
+                  "maximum": 4096
+                },
+                {
+                  "type": "string",
+                  "maxLength": 16,
+                  "pattern": "^[0-9]+(\\.[0-9]+)?(px|%|em|rem)?$"
+                }
+              ]
+            },
+            "height": {
+              "anyOf": [
+                {
+                  "type": "number",
+                  "exclusiveMinimum": 0,
+                  "maximum": 4096
+                },
+                {
+                  "type": "string",
+                  "maxLength": 16,
+                  "pattern": "^[0-9]+(\\.[0-9]+)?(px|%|em|rem)?$"
+                }
+              ]
+            }
+          }
+        }
+      }
+    }
+  },
+  "digests": {
+    "algorithm": "sha256",
+    "schema": "d147fafd26dd4be4cd41a1f504843366a01725a84a35668d565be4d210136729",
+    "catalog": "60e2460ae227ccc42e3a44a2cda2740ec688ce57a68df972d67f8ab69c9d321f"
+  }
+}

@@ -1,0 +1,229 @@
+name: CI
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: true
+
+jobs:
+  frontend:
+    name: Frontend lint and build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22.13
+
+      - uses: pnpm/action-setup@v6
+        with:
+          version: 10.33.2
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Lint
+        run: pnpm lint
+
+      - name: Typecheck
+        run: pnpm typecheck
+
+      - name: Notebook editor tests
+        run: pnpm test:notebook-editor
+
+      - name: Authentication security tests
+        run: pnpm test:auth
+
+      - name: ELN experiment record tests
+        run: pnpm test:eln
+
+      - name: Database migration safety tests
+        run: pnpm test:database
+
+      - name: Deployment secret projection tests
+        run: pnpm test:deployment
+
+      - name: HAM task proxy and queue tests
+        run: pnpm test:tasks
+
+      - name: HAM memory workspace proxy tests
+        run: pnpm test:ham-memory
+
+      - name: Surface projection and renderer tests
+        run: pnpm test:surfaces
+
+      - name: Paper workbench tests
+        run: pnpm test:papers
+
+      - name: Ingestion and plugin contract tests
+        run: pnpm test:ingestion
+
+      - name: Plugin manifest and command tests
+        run: pnpm test:plugins
+
+      - name: Semantic field boundary tests
+        run: pnpm test:semantic-field
+
+      - name: Canonical object reference tests
+        run: pnpm test:object-references
+
+      - name: Document anchor identity tests
+        run: pnpm test:anchors
+
+      - name: Canonical object projection tests
+        run: pnpm test:projections
+
+      - name: Code graph provider contract tests
+        run: pnpm test:code-graph
+
+      - name: Settings dialog layout tests
+        run: pnpm test:settings-dialog
+
+      - name: Canvas harness projection tests
+        run: pnpm test:canvas-harness
+
+      - name: Build
+        run: pnpm build
+
+      - name: Audit production dependencies
+        run: pnpm audit --prod --audit-level high
+
+  python:
+    name: Python services
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.13"
+
+      - name: Install service dependencies
+        run: python -m pip install --disable-pip-version-check -r services/galaxy-brain-api/requirements.txt
+
+      - name: Compile service sources
+        run: python -m compileall -q services
+
+      - name: Tenant filesystem authorization tests
+        run: python -m unittest discover -s services/galaxy-brain-api -p 'test_*.py'
+
+      - name: MarkItDown worker boundary tests
+        run: python -m unittest discover -s services/markitdown-server -p 'test_*.py'
+
+      - name: Audit service dependencies
+        run: |
+          python -m pip install --disable-pip-version-check pip-audit
+          pip-audit -r services/galaxy-brain-api/requirements.txt
+          pip-audit -r services/markitdown-server/requirements.txt
+
+  database:
+    name: PostgreSQL migrations
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: pgvector/pgvector:pg16
+        env:
+          POSTGRES_DB: galaxy_brain
+          POSTGRES_USER: galaxy_brain
+          POSTGRES_PASSWORD: migration-test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U galaxy_brain -d galaxy_brain"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 20
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22.13
+
+      - uses: pnpm/action-setup@v6
+        with:
+          version: 10.33.2
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Apply migrations twice and verify
+        env:
+          DATABASE_MIGRATION_URL: postgresql://galaxy_brain:migration-test@127.0.0.1:5432/galaxy_brain
+          DATABASE_VERIFY_URL: postgresql://galaxy_brain:migration-test@127.0.0.1:5432/galaxy_brain
+        run: |
+          pnpm db:migrate
+          pnpm db:migrate
+          pnpm db:verify
+
+      - name: Prove conversation discovery snapshot continuity
+        env:
+          CONVERSATION_SNAPSHOT_TEST_URL: postgresql://galaxy_brain:migration-test@127.0.0.1:5432/galaxy_brain
+        run: node --test scripts/conversation-snapshot-postgres.test.mjs
+
+      - name: Prove restricted API role tenant isolation
+        env:
+          DATABASE_MIGRATION_URL: postgresql://galaxy_brain:migration-test@127.0.0.1:5432/galaxy_brain
+          RLS_RUNTIME_DATABASE_URL: postgresql://galaxy_api_runtime_test:runtime-test@127.0.0.1:5432/galaxy_brain
+          RLS_RUNTIME_PASSWORD: runtime-test
+          RLS_TEST_CONFIRMATION: ephemeral-ci-database
+        run: node scripts/rls-runtime-role.test.mjs
+
+  docker-build:
+    name: Docker Compose startup smoke test
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request' || (github.event_name == 'push' && github.ref == 'refs/heads/main')
+    env:
+      POSTGRES_DB: galaxy_brain
+      POSTGRES_USER: galaxy_brain_migrator
+      GALAXY_DEPLOY_POSTGRES_PASSWORD: ci-migration-password
+      LOCAL_WEB_DATABASE_ROLE: galaxy_brain_web
+      LOCAL_WEB_DATABASE_PASSWORD: ci-web-runtime-password
+      LOCAL_API_DATABASE_ROLE: galaxy_brain_api
+      LOCAL_API_DATABASE_PASSWORD: ci-api-runtime-password
+      GALAXY_DEPLOY_DATABASE_URL: postgresql://galaxy_brain_web:ci-web-runtime-password@postgres:5432/galaxy_brain
+      GALAXY_DEPLOY_GB_DATABASE_URL: postgresql://galaxy_brain_api:ci-api-runtime-password@postgres:5432/galaxy_brain
+      GALAXY_DEPLOY_DATABASE_MIGRATION_URL: postgresql://galaxy_brain_migrator:ci-migration-password@postgres:5432/galaxy_brain
+      AUTH_ORIGIN: http://localhost:39001
+      WEBAUTHN_RP_ID: localhost
+      GALAXY_DEPLOY_REGISTRATION_INVITE_CODE: ci-registration-invite
+      GALAXY_DEPLOY_GALAXY_API_PROXY_TOKEN: ci-galaxy-api-proxy
+      GALAXY_DEPLOY_DOCLING_API_KEY: ci-docling-api-key
+      GALAXY_DEPLOY_MARKITDOWN_PROXY_TOKEN: ci-markitdown-proxy
+      WEB_HOST_PORT: 39001
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Build all images
+        run: docker compose build --no-cache
+
+      - name: Start bundled local database stack
+        run: >-
+          docker compose -p galaxy-local-smoke
+          -f docker-compose.yml -f docker-compose.local-db.yml
+          --profile local-db up --build --wait --wait-timeout 180
+
+      - name: Verify public application health
+        run: curl --fail --show-error --silent http://127.0.0.1:39001/api/health
+
+      - name: Show service logs after failure
+        if: failure()
+        run: >-
+          docker compose -p galaxy-local-smoke
+          -f docker-compose.yml -f docker-compose.local-db.yml
+          --profile local-db logs --no-color
+
+      - name: Remove startup-smoke resources
+        if: always()
+        run: >-
+          docker compose -p galaxy-local-smoke
+          -f docker-compose.yml -f docker-compose.local-db.yml
+          --profile local-db down --volumes --remove-orphans

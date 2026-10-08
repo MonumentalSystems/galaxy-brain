@@ -1,0 +1,130 @@
+{
+  "input": {
+    "removedItemIds": ["removed-note"],
+    "removedEdgeIds": ["removed-edge"],
+    "edges": [
+      {
+        "targetItemId": "paper-a",
+        "style": {
+          "width": 2,
+          "color": "#315f49"
+        },
+        "sourceItemId": "note-b",
+        "label": "supports",
+        "id": "edge-z",
+        "edgeKind": "presentation"
+      }
+    ],
+    "items": [
+      {
+        "y": 0.000001,
+        "x": -0.0,
+        "width": 400,
+        "zIndex": 2,
+        "style": {
+          "😀": "astral-key",
+          "�": "replacement-key",
+          "accent": "é"
+        },
+        "subjectRef": "gb:object:v1:artifact:note-b:latest",
+        "nodeType": "galaxy.note",
+        "id": "note-b",
+        "height": 260,
+        "displayMode": "card",
+        "collapsed": false,
+        "angle": 0
+      },
+      {
+        "id": "paper-a",
+        "subjectRef": "gb:object:v1:paper:paper-a:pinned:sha256%3Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "nodeType": "galaxy.paper",
+        "x": 420.5,
+        "y": -160,
+        "width": 420,
+        "height": 270,
+        "angle": 0,
+        "zIndex": 1,
+        "displayMode": "card",
+        "collapsed": true,
+        "style": {
+          "tone": "research"
+        }
+      }
+    ],
+    "schemaId": "gb.canvas.snapshot.v1"
+  },
+  "reorderedInput": {
+    "schemaId": "gb.canvas.snapshot.v1",
+    "removedEdgeIds": ["removed-edge"],
+    "removedItemIds": ["removed-note"],
+    "items": [
+      {
+        "style": {
+          "tone": "research"
+        },
+        "collapsed": true,
+        "displayMode": "card",
+        "zIndex": 1,
+        "angle": 0,
+        "height": 270,
+        "width": 420,
+        "y": -160,
+        "x": 420.5,
+        "nodeType": "galaxy.paper",
+        "subjectRef": "gb:object:v1:paper:paper-a:pinned:sha256%3Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "id": "paper-a"
+      },
+      {
+        "id": "note-b",
+        "subjectRef": "gb:object:v1:artifact:note-b:latest",
+        "nodeType": "galaxy.note",
+        "x": 0,
+        "y": 0.000001,
+        "width": 400,
+        "height": 260,
+        "angle": 0,
+        "zIndex": 2,
+        "displayMode": "card",
+        "collapsed": false,
+        "style": {
+          "accent": "é",
+          "�": "replacement-key",
+          "😀": "astral-key"
+        }
+      }
+    ],
+    "edges": [
+      {
+        "id": "edge-z",
+        "sourceItemId": "note-b",
+        "targetItemId": "paper-a",
+        "edgeKind": "presentation",
+        "label": "supports",
+        "style": {
+          "color": "#315f49",
+          "width": 2
+        }
+      }
+    ]
+  },
+  "canonical": "{\"edges\":[{\"edgeKind\":\"presentation\",\"id\":\"edge-z\",\"label\":\"supports\",\"sourceItemId\":\"note-b\",\"style\":{\"color\":\"#315f49\",\"width\":2},\"targetItemId\":\"paper-a\"}],\"items\":[{\"angle\":0,\"collapsed\":false,\"displayMode\":\"card\",\"height\":260,\"id\":\"note-b\",\"nodeType\":\"galaxy.note\",\"style\":{\"accent\":\"é\",\"😀\":\"astral-key\",\"�\":\"replacement-key\"},\"subjectRef\":\"gb:object:v1:artifact:note-b:latest\",\"width\":400,\"x\":0,\"y\":0.000001,\"zIndex\":2},{\"angle\":0,\"collapsed\":true,\"displayMode\":\"card\",\"height\":270,\"id\":\"paper-a\",\"nodeType\":\"galaxy.paper\",\"style\":{\"tone\":\"research\"},\"subjectRef\":\"gb:object:v1:paper:paper-a:pinned:sha256%3Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"width\":420,\"x\":420.5,\"y\":-160,\"zIndex\":1}],\"removedEdgeIds\":[\"removed-edge\"],\"removedItemIds\":[\"removed-note\"],\"schemaId\":\"gb.canvas.snapshot.v1\"}",
+  "contentHash": "sha256:d482c57675d8f76e85534daf7b2b3eaa125bbaa0ee39c62e91b8a8ed63e1fda3",
+  "frameInput": {
+    "schemaId": "gb.canvas.snapshot.v1",
+    "items": [],
+    "edges": [],
+    "frames": [
+      {
+        "id": "astral-frame",
+        "title": "Orbit 😀 evidence",
+        "x": -40,
+        "y": 20,
+        "width": 720,
+        "height": 480,
+        "tone": "plum"
+      }
+    ]
+  },
+  "frameCanonical": "{\"edges\":[],\"frames\":[{\"height\":480,\"id\":\"astral-frame\",\"title\":\"Orbit 😀 evidence\",\"tone\":\"plum\",\"width\":720,\"x\":-40,\"y\":20}],\"items\":[],\"removedEdgeIds\":[],\"removedItemIds\":[],\"schemaId\":\"gb.canvas.snapshot.v1\"}",
+  "frameContentHash": "sha256:66173e013ca38030a01555aad71f65ba8002f5b0c5a9437d92266db02aadbe83"
+}

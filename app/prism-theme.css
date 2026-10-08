@@ -1,0 +1,116 @@
+/* Prism.js syntax highlighting theme — works with both light and dark mode */
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+  color: #6a737d;
+}
+
+.token.punctuation {
+  color: #6e7781;
+}
+
+.token.namespace {
+  opacity: 0.7;
+}
+
+.token.property,
+.token.tag,
+.token.boolean,
+.token.number,
+.token.constant,
+.token.symbol,
+.token.deleted {
+  color: #cf222e;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+  color: #0a3069;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string {
+  color: #0550ae;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.keyword {
+  color: #cf222e;
+}
+
+.token.function,
+.token.class-name {
+  color: #8250df;
+}
+
+.token.regex,
+.token.important,
+.token.variable {
+  color: #953800;
+}
+
+/* Dark mode overrides */
+:is(.dark) .token.comment,
+:is(.dark) .token.prolog,
+:is(.dark) .token.doctype,
+:is(.dark) .token.cdata {
+  color: #8b949e;
+}
+
+:is(.dark) .token.punctuation {
+  color: #8b949e;
+}
+
+:is(.dark) .token.property,
+:is(.dark) .token.tag,
+:is(.dark) .token.boolean,
+:is(.dark) .token.number,
+:is(.dark) .token.constant,
+:is(.dark) .token.symbol,
+:is(.dark) .token.deleted {
+  color: #ff7b72;
+}
+
+:is(.dark) .token.selector,
+:is(.dark) .token.attr-name,
+:is(.dark) .token.string,
+:is(.dark) .token.char,
+:is(.dark) .token.builtin,
+:is(.dark) .token.inserted {
+  color: #a5d6ff;
+}
+
+:is(.dark) .token.operator,
+:is(.dark) .token.entity,
+:is(.dark) .token.url,
+:is(.dark) .language-css .token.string,
+:is(.dark) .style .token.string {
+  color: #79c0ff;
+}
+
+:is(.dark) .token.atrule,
+:is(.dark) .token.attr-value,
+:is(.dark) .token.keyword {
+  color: #ff7b72;
+}
+
+:is(.dark) .token.function,
+:is(.dark) .token.class-name {
+  color: #d2a8ff;
+}
+
+:is(.dark) .token.regex,
+:is(.dark) .token.important,
+:is(.dark) .token.variable {
+  color: #ffa657;
+}

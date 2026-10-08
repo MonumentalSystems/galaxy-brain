@@ -1,0 +1,81 @@
+{
+  "schemaVersion": "codebase-memory.snapshot.v1",
+  "provider": {
+    "name": "codebase-memory-mcp",
+    "version": "0.1.0"
+  },
+  "repository": {
+    "repositoryId": "github.com/MonumentalSystems/demo-lean",
+    "commit": "0123456789abcdef0123456789abcdef01234567"
+  },
+  "snapshot": {
+    "digest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+  },
+  "nodes": [
+    {
+      "id": "repo",
+      "type": "Repository",
+      "name": "demo-lean"
+    },
+    {
+      "id": "main-file",
+      "type": "File",
+      "path": "Demo/Main.lean",
+      "language": "Lean"
+    },
+    {
+      "id": "helper-file",
+      "type": "File",
+      "path": "Demo/Helper.lean",
+      "language": "Lean"
+    },
+    {
+      "id": "root-theorem",
+      "type": "Theorem",
+      "path": "Demo/Main.lean",
+      "qualifiedName": "Demo.main_theorem",
+      "language": "Lean"
+    },
+    {
+      "id": "helper-lemma",
+      "type": "Lemma",
+      "properties": {
+        "path": "Demo/Helper.lean",
+        "qualifiedName": "Demo.helper_lemma",
+        "language": "Lean"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "type": "CONTAINS",
+      "source": "repo",
+      "target": "main-file"
+    },
+    {
+      "type": "CONTAINS",
+      "source": "repo",
+      "target": "helper-file"
+    },
+    {
+      "type": "DEFINES",
+      "source": "main-file",
+      "target": "root-theorem"
+    },
+    {
+      "type": "DEFINES",
+      "source": "helper-file",
+      "target": "helper-lemma"
+    },
+    {
+      "type": "IMPORTS",
+      "source": "main-file",
+      "target": "helper-file"
+    },
+    {
+      "type": "CALLS",
+      "source": "root-theorem",
+      "target": "helper-lemma"
+    }
+  ]
+}

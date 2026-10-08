@@ -1,0 +1,15 @@
+services:
+  migrate:
+    # Local development only: migrations remain owned by POSTGRES_USER, then
+    # two distinct non-owner runtime roles receive the minimum required grants.
+    command:
+      - sh
+      - -c
+      - node scripts/db-migrate.mjs && exec node scripts/provision-local-runtime-roles.mjs
+    environment:
+      LOCAL_WEB_DATABASE_ROLE: ${LOCAL_WEB_DATABASE_ROLE:?Set LOCAL_WEB_DATABASE_ROLE in .env}
+      LOCAL_WEB_DATABASE_PASSWORD: ${LOCAL_WEB_DATABASE_PASSWORD:?Set LOCAL_WEB_DATABASE_PASSWORD in .env}
+      LOCAL_API_DATABASE_ROLE: ${LOCAL_API_DATABASE_ROLE:?Set LOCAL_API_DATABASE_ROLE in .env}
+      LOCAL_API_DATABASE_PASSWORD: ${LOCAL_API_DATABASE_PASSWORD:?Set LOCAL_API_DATABASE_PASSWORD in .env}
+      LOCAL_VERIFIER_DATABASE_ROLE: ${LOCAL_VERIFIER_DATABASE_ROLE:-}
+      LOCAL_VERIFIER_DATABASE_PASSWORD: ${LOCAL_VERIFIER_DATABASE_PASSWORD:-}

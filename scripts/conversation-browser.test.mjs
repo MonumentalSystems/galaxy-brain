@@ -1,0 +1,40 @@
+import assert from "node:assert/strict"
+import { readFile } from "node:fs/promises"
+import test from "node:test"
+
+test("the bounded conversation browser is Graph-only and independent of graph assembly", async () => {
+  const graphClient = await readFile(new URL("../app/graph/graph-client.tsx", import.meta.url), "utf8")
+  const browser = await readFile(new URL("../components/graph/conversation-browser.tsx", import.meta.url), "utf8")
+  const fieldBoundary = graphClient.indexOf('if (presentation === "field")')
+  const browserMount = graphClient.indexOf("<ConversationBrowser")
+  assert.ok(fieldBoundary >= 0 && browserMount > fieldBoundary)
+  assert.match(graphClient, /useSearchParams\(\)/u)
+  assert.match(graphClient, /loadAuthorizedGraph\(tenantId, routeSearch, controller\.signal\)/u)
+  assert.match(graphClient, /selectedConversationReference=\{loaded\?\.conversationReference \?\? null\}/u)
+  assert.match(browser, /readConversationCollectionResponse/u)
+  assert.match(browser, /appendConversationCollectionPage/u)
+  assert.match(browser, /response\.status === 422/u)
+  assert.match(browser, /Refresh from first page/u)
+  assert.match(browser, /aria-current=\{selected \? "page" : undefined\}/u)
+  assert.match(browser, /href=\{conversationGraphHref\(conversation\.ref\)\}/u)
+  assert.match(browser, /href=\{atlasReferenceHandoffHref\(conversation\.ref\)\}/u)
+  assert.match(browser, /aria-label=\{`Place on Atlas: \$\{conversation\.title\}`\}/u)
+  assert.match(browser, /<Button asChild className="min-h-11 w-full sm:w-auto"/u)
+  assert.match(browser, /<Link[\s\S]*?<MapPinned aria-hidden="true" \/> Place on Atlas[\s\S]*?<\/Link>/u)
+  assert.match(browser, /graph-surface rounded-2xl/u)
+  assert.match(browser, /Full turns load only after selection/u)
+  assert.doesNotMatch(browser, /\bRecent\b/u)
+  assert.doesNotMatch(browser, /artifactRefs|turns\s*:/u)
+  assert.doesNotMatch(browser, /placeReference|mutateCanvas|item\.place/u)
+})
+
+test("the private aggregate proxy bounds query vocabulary and collection responses", async () => {
+  const route = await readFile(new URL("../app/api/eln/[...path]/route.ts", import.meta.url), "utf8")
+  assert.match(route, /MAX_CONVERSATION_COLLECTION_RESPONSE_BYTES = 1_048_576/u)
+  assert.match(route, /!\["limit", "workspace_id", "cursor"\]\.includes\(key\)/u)
+  assert.match(route, /parameters\.getAll\("limit"\)\.length > 1/u)
+  assert.match(route, /parameters\.getAll\("workspace_id"\)\.length > 1/u)
+  assert.match(route, /parameters\.getAll\("cursor"\)\.length > 1/u)
+  assert.match(route, /readBoundedResponseBody\([\s\S]*MAX_CONVERSATION_COLLECTION_RESPONSE_BYTES/u)
+  assert.doesNotMatch(route.slice(route.indexOf('if \(path\[0\] === "conversations"\)'), route.indexOf('if \(path\[0\] === "document-anchors"\)')), /tenant_id/u)
+})
