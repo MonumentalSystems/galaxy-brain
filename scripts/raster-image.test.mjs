@@ -138,7 +138,7 @@ test("sharp is a pinned direct dependency and decoder code remains server-owned"
     readFile(new URL("../lib/server/raster-image-validation.js", import.meta.url), "utf8"),
     readFile(new URL("../lib/durable-document-import.js", import.meta.url), "utf8"),
   ])
-  assert.equal(pkg.dependencies.sharp, "0.35.4")
+  assert.equal(pkg.dependencies.sharp, "0.35.5")
   assert.match(decoder, /from "sharp"/u)
   assert.match(decoder, /MAX_CONCURRENT_RASTER_DECODES = 2/u)
   assert.doesNotMatch(decoder, /rasterDecodeWaiters/u)

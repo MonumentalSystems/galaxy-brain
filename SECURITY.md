@@ -19,3 +19,13 @@ Include the affected commit, deployment shape, reproduction steps, and impact wh
 - Keep dependency alerts, secret scanning, push protection, and CodeQL enabled.
 
 Only the latest commit on the default branch is supported during alpha development.
+
+## Accepted dependency advisories
+
+`pnpm audit` ignores these advisories through `pnpm.auditConfig.ignoreGhsas` in
+`package.json`. Each entry is reviewed whenever dependencies change and removed
+as soon as a fix is available.
+
+| Advisory | Package | Why it is accepted |
+| --- | --- | --- |
+| [GHSA-vfj7-8cjw-p6xm](https://github.com/advisories/GHSA-vfj7-8cjw-p6xm) | `braces` <= 3.0.3 | No patched release exists. It is reached only through `tailwindcss-animate` -> `tailwindcss` 3 -> `chokidar`, Tailwind's build-time file watcher, which processes repository glob patterns rather than user input and does not run in the deployed application. Remove when `braces` ships a fix or Tailwind no longer depends on it. |
