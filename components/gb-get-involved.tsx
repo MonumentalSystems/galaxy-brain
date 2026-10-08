@@ -1,6 +1,7 @@
 "use client";
 
 import { Code, Users, Server, Mail, Globe } from "lucide-react";
+import { GitHubIcon } from "@/components/github-icon";
 import { ScrollReveal } from "@/components/scroll-reveal";
 
 interface AudienceCard {
@@ -32,7 +33,7 @@ const AUDIENCE_CARDS: AudienceCard[] = [
     icon: <Server size={24} />,
     title: "For teams",
     items: [
-      "Run your own instance on your own hardware, or use a hosted workspace",
+      "Run your own instance from the public source, or use a hosted workspace",
       "Keep your workspace, data, and identities under your control",
       "Connect it to shared agent memory through HAM",
     ],
@@ -142,6 +143,12 @@ export function GbGetInvolved() {
               href="https://monumentalsystems.com"
               icon={<Globe size={16} />}
               label="Monumental Systems"
+              external
+            />
+            <LinkButton
+              href="https://github.com/MonumentalSystems/galaxy-brain"
+              icon={<GitHubIcon className="h-4 w-4" />}
+              label="Source on GitHub"
               external
             />
           </div>

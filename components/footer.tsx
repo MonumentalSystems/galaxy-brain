@@ -30,6 +30,7 @@ const FOOTER_COLUMNS: FooterColumn[] = [
     links: [
       { label: "Open workspace", href: "/login" },
       { label: "Request an invite", href: "mailto:info@monumentalsystems.com?subject=Galaxy%20Brain%20invite" },
+      { label: "Source code", href: "https://github.com/MonumentalSystems/galaxy-brain", external: true },
     ],
   },
   {
